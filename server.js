@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const cors = require('cors'); // Import CORS
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all origins
 
 // Load users from the JSON file
 const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
