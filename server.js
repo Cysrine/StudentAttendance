@@ -20,7 +20,7 @@ app.post('/login', (req, res) => {
     } else {
         res.status(401).send({ message: 'Invalid username or password' });
     }
-});
+}); 
 
 // Start the server
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));
