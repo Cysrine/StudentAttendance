@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Creating a new class</title>
+
+        <style>
+            body {
+                font-family: 'Comic sans', sans-serif;
+                background-color: rgb(100, 181, 251);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .main_container {
+                text-align: left;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                height: 500px;
+                width: 500px;
+            }
+            h2 {
+                font-size: 1.5em;
+                color: rgb(57, 129, 177);
+            }
+            input {
+                width: 51.5%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .name_form_container {
+                margin-top: 5px;
+                margin-bottom: 15px;
+            }
+            .name_form_container input {
+                margin-left: 15px;
+            }
+
+            .student_form_container {
+                margin-bottom: 15px;
+            }
+            .student_form_container input {
+                display: block;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                width: 65%;
+            }
+            .student_form_container #dropdown {
+                position: relative;
+                top: 100%;
+                left: 0;
+                width: 68%;
+                border-radius: 4px;
+                background-color: white;
+                border: 1px solid #ccc;
+                max-height: 150px;
+                overflow-y: auto;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                z-index: 1000;
+                display: none;
+            }
+            .student_form_container #dropdown li {
+                padding: 10 px;
+                margin: 5px;
+                cursor: pointer;
+            }
+            .student_form_container #dropdown li:hover {
+                background-color: #f0f0f0;
+            }
+
+            .buttons button {
+                background-color: deepskyblue;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                height: 40px;
+                margin-right: 15px;
+            }
+            .buttons button:hover {
+                background-color: rgb(0, 144, 192);
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="main_container">
+            <h2>Creating a new class:</h2>
+
+            <div class="name_form_container">
+                <label for="name">Name:</label>
+                <input id="name_input" type="text" placeholder="Enter class' name...">
+            </div>
+
+            <div class="student_form_container">
+                <label for="students">Adding students:</label>
+
+                <input id="dropdown_search" type="text" placeholder="Enter student's name..." oninput="filter_dropdown()">
+                <ul id="dropdown">
+                    <li onclick="select_student(this)">Abby</li>
+                    <li onclick="select_student(this)">Ben</li>
+                    <li onclick="select_student(this)">Charlotte</li>
+                    <li onclick="select_student(this)">Daniel</li>
+                    <li onclick="select_student(this)">Eddy</li>
+                </ul>
+            
+                <div id="selected_students_container"></div>
+
+            </div>
+
+            <div class="buttons">
+                <button id="cancel">CANCEL</button>
+                <button id="create">CREATE</button>
+            </div>
+        </div>
+
+        <script>
+            function filter_dropdown() {
+                const search_input = document.getElementById("dropdown_search");
+                const dropdown = document.getElementById("dropdown");
+                const filter = search_input.value.toUpperCase();
+                const items = dropdown.getElementsByTagName("li");
+
+                if (filter == "") {
+                    dropdown.style.display = "none";
+                    return;
+                }
+
+                let has_items = false;
+                for (const item of items) {
+                    if (item.textContent.toUpperCase().includes(filter)) {
+                    item.style.display = '';
+                    has_items = true;
+                    } else {
+                    item.style.display = 'none';
+                    }
+                }
+
+                dropdown.style.display = has_items ? "block" : "none";
+            }
+
+            function select_student(student) {
+                const search_input = document.getElementById("dropdown_search");
+                const selected_students_container = document.getElementById("selected_students_container")
+
+                const new_student = document.createElement("div");
+                new_student.textContent = student.textContent;
+
+                let already_in = false;
+                for (const child of selected_students_container.children) {
+                    if (new_student.textContent == child.textContent) {
+                        already_in = true;
+                        break;
+                    }
+                }
+
+                if (!already_in) {
+                    
+                    selected_students_container.appendChild(new_student);
+                }
+
+                search_input.value = "";
+                document.getElementById("dropdown").style.display = "none"
+            }
+        </script>
+    </body>
+</html>
