@@ -13,7 +13,29 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
-                margin: 0;
+                margin: 0;      
+            }
+            .student button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            }
+            .student {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            }
+            .student-list {
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            }
+            .search-box {
+            margin-bottom: 15px;
             }
             .main_container {
                 text-align: left;
@@ -21,8 +43,9 @@
                 padding: 20px;
                 border-radius: 8px;
                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                height: 500px;
+                height: 700px;
                 width: 500px;
+                margin-top: 30px;
             }
             h2 {
                 font-size: 1.5em;
@@ -85,91 +108,110 @@
                 height: 40px;
                 margin-right: 15px;
             }
-            .buttons button:hover {
-                background-color: rgb(0, 144, 192);
-            }
+
             
         </style>
     </head>
     <body>
-        <div class="main_container">
-            <h2>Creating a new class:</h2>
+            <div class="main_container">
 
-            <div class="name_form_container">
-                <label for="name">Name:</label>
-                <input id="name_input" type="text" placeholder="Enter class' name...">
-            </div>
+                <h2>Creating a new class:</h2>
 
-            <div class="student_form_container">
-                <label for="students">Adding students:</label>
-
-                <input id="dropdown_search" type="text" placeholder="Enter student's name..." oninput="filter_dropdown()">
-                <ul id="dropdown">
-                    <li onclick="select_student(this)">Abby</li>
-                    <li onclick="select_student(this)">Ben</li>
-                    <li onclick="select_student(this)">Charlotte</li>
-                    <li onclick="select_student(this)">Daniel</li>
-                    <li onclick="select_student(this)">Eddy</li>
-                </ul>
+                <div class="name_form_container">
+                    <label for="name">Name:</label>
+                    <input id="name_input" type="text" placeholder="Enter class' name...">
+                </div>
+                <h1>Add Students to Classes</h1>
             
-                <div id="selected_students_container"></div>
-
-            </div>
-
-            <div class="buttons">
-                <button id="cancel">CANCEL</button>
-                <button id="create">CREATE</button>
+                <div class="search-box">
+                    <label for="student-search">Search for a student:</label>
+                    <input type="text" id="student-search" placeholder="Type to search...">
+                </div>
+            
+                <div class="student-list" id="student-list">
+                    <!-- Dynamic student list will be populated here -->
+                </div>
+            
+                <div id="selected-students">
+                    <h2>Selected Students</h2>
+                    <ul id="selected-student-list">
+                        <!-- Selected students will appear here -->
+                    </ul>
+                </div>
+                <div class="buttons">
+                    <button id="cancel">CANCEL</button>
+                    <button id="create">CREATE</button>
+                </div>
             </div>
         </div>
 
         <script>
-            function filter_dropdown() {
-                const search_input = document.getElementById("dropdown_search");
-                const dropdown = document.getElementById("dropdown");
-                const filter = search_input.value.toUpperCase();
-                const items = dropdown.getElementsByTagName("li");
 
-                if (filter == "") {
-                    dropdown.style.display = "none";
-                    return;
-                }
+        
+        // DOWNLOAD LIVE SERVER EXTENSION AND RUN ON IT
 
-                let has_items = false;
-                for (const item of items) {
-                    if (item.textContent.toUpperCase().includes(filter)) {
-                    item.style.display = '';
-                    has_items = true;
-                    } else {
-                    item.style.display = 'none';
-                    }
-                }
+        
 
-                dropdown.style.display = has_items ? "block" : "none";
+
+        let students = [];
+
+        fetch('./students.json')
+            .then(response => response.json())
+            .then(data => {
+                students = data;
+                renderStudentList(); // Populate the student list after loading data
+            })
+            .catch(error => console.error('Error loading students:', error));
+
+
+
+        const studentListElement = document.getElementById('student-list');
+        const selectedStudentListElement = document.getElementById('selected-student-list');
+        const searchInput = document.getElementById('student-search');
+
+        function renderStudentList(filter = "") {
+            studentListElement.innerHTML = "";
+            const filteredStudents = students.filter(student => 
+                student.name.toLowerCase().includes(filter.toLowerCase())
+            );
+    
+            filteredStudents.forEach(student => {
+                const studentDiv = document.createElement('div');
+                studentDiv.classList.add('student');
+        
+                const studentName = document.createElement('span');
+                studentName.textContent = student.name;
+        
+                const addButton = document.createElement('button');
+                addButton.textContent = "Add";
+                addButton.onclick = () => addStudentToClass(student);
+        
+                studentDiv.appendChild(studentName);
+                studentDiv.appendChild(addButton);
+                studentListElement.appendChild(studentDiv);
+            });
+        }
+
+        function addStudentToClass(student) {
+            const existingStudent = Array.from(selectedStudentListElement.children)
+                .some(listItem => listItem.textContent === student.name);
+
+            if (existingStudent) {
+                alert(`${student.name} is already added!`);
+                return;
             }
 
-            function select_student(student) {
-                const search_input = document.getElementById("dropdown_search");
-                const selected_students_container = document.getElementById("selected_students_container")
+            const listItem = document.createElement('li');
+            listItem.textContent = student.name;
+            selectedStudentListElement.appendChild(listItem);
+        }
 
-                const new_student = document.createElement("div");
-                new_student.textContent = student.textContent;
+        searchInput.addEventListener('input', (event) => {
+            renderStudentList(event.target.value);
+        });
 
-                let already_in = false;
-                for (const child of selected_students_container.children) {
-                    if (new_student.textContent == child.textContent) {
-                        already_in = true;
-                        break;
-                    }
-                }
-
-                if (!already_in) {
-                    
-                    selected_students_container.appendChild(new_student);
-                }
-
-                search_input.value = "";
-                document.getElementById("dropdown").style.display = "none"
-            }
+        // Initial render
+        renderStudentList();      
         </script>
     </body>
 </html>
