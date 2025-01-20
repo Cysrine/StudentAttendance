@@ -15,6 +15,13 @@
                 height: 100vh;
                 margin: 0;      
             }
+            .class-list {
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            }
             .student button {
             background-color: #007BFF;
             color: white;
@@ -118,8 +125,10 @@
                 <h2>Creating a new class:</h2>
 
                 <div class="name_form_container">
-                    <label for="name">Name:</label>
-                    <input id="name_input" type="text" placeholder="Enter class' name...">
+                    <label for="name">Choose a class:</label>
+                    <div class="class-list" id="class-list">
+                        <!-- Dynamic class list will be populated here -->
+                    </div>
                 </div>
                 <h1>Add Students to Classes</h1>
             
@@ -150,7 +159,15 @@
         
         // DOWNLOAD LIVE SERVER EXTENSION AND RUN ON IT
 
-        
+        let classes = []
+
+        fetch('./classes.json')
+            .then(response => response.json())
+            .then(data => {
+                classes = data;
+                renderClassList();
+            })
+            .catch(error => console.error('Error loading students:', error));
 
 
         let students = [];
@@ -168,6 +185,36 @@
         const studentListElement = document.getElementById('student-list');
         const selectedStudentListElement = document.getElementById('selected-student-list');
         const searchInput = document.getElementById('student-search');
+        const ClassListElement = document.getElementById('class-list');
+        let selectedClass = null; // To store the currently selected class
+
+
+        function renderClassList(filter = "") {
+            ClassListElement.innerHTML = ""; // Clear the class list
+
+            const filteredClasses = classes.filter(classItem =>
+                classItem.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filteredClasses.forEach(classItem => {
+                const classDiv = document.createElement('div');
+                classDiv.classList.add('class');
+
+                const className = document.createElement('span');
+                className.textContent = classItem.name;
+
+                const chooseButton = document.createElement('button');
+                chooseButton.textContent = "Choose";
+                chooseButton.onclick = () => {
+                    selectedClass = classItem;
+                    alert(`Class "${classItem.name}" selected!`);
+                };
+
+                classDiv.appendChild(className);
+                classDiv.appendChild(chooseButton);
+                ClassListElement.appendChild(classDiv);
+            });
+        }
 
         function renderStudentList(filter = "") {
             studentListElement.innerHTML = "";
