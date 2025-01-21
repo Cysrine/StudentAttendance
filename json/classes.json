@@ -2,15 +2,30 @@
     {
     "id": 1,
     "name": "Mathematics",
-    "Students": [
-       
-        
-    ]
+    "students": [ {
+        "name": "John Doe",
+        "attendance": 
+        [
+        {
+            "date": "2025-01-09",
+            "status": "present"
+        },
+        {
+            "date": "2025-01-12",
+            "status": "absent"
+        },
+        {
+            "date": "2025-01-20",
+            "status": "ill"
+        }
+        ]
+        }   
+        ]
     },
     {
     "id": 2,
     "name": "Physics",
-    "Students": [
+    "students": [
          
           
     ]
@@ -18,7 +33,7 @@
     {
     "id": 3,
     "name": "Literature",
-    "Students": [
+    "students": [
              
               
     ]
