@@ -24,5 +24,14 @@ app.post('/login', (req, res) => {
     }
 }); 
 
+app.get('/home', (req, res) => {
+    try {
+        const classes = JSON.parse(fs.readFileSync('classes.json', 'utf-8'));
+        res.status(200).json(classes);
+    } catch (error) {
+        res.status(500).send({ message: 'Error reading classes.json file' });
+    }
+}); 
+
 // Start the server
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));

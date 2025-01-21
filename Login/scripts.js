@@ -13,7 +13,7 @@ async function handleLogin() {
         if (response.ok) {
             message.textContent = 'Login successful';
             message.style.color = 'green';
-            setTimeout(() => { window.location.href = 'adminsuccess.html'; }, 3000);
+            setTimeout(() => { window.location.href = 'home/home.html'; }, 3000);
         } else {
             message.textContent = 'Invalid username or password';
             message.style.color = 'red';
