@@ -258,7 +258,7 @@
             });
 
             Object.keys(totalAttendance).forEach(student => {
-                const percentage = (totalAttendance[student] / (subjects.length * totalClasses)) * 100;
+                const percentage = (totalAttendance[student] / (subjects.length)) * 100;
                 document.getElementById(`${student}-overall-percentage`).innerText = percentage.toFixed(0) + '%';
             });
         }
