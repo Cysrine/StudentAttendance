@@ -19,21 +19,46 @@
             "status": "ill"
         }
         ]
-        }   
+        },
+        {
+            "name": "Jmar Shah",
+            "attendance": [{}]
+        },
+        {
+            "name": "Qmar Shah",
+            "attendance": [{}]
+        },
+        {
+            "name": "Smar Shah",
+            "attendance": [{}]
+        },
+        {
+            "name": "Bmar Shah",
+            "attendance": [{}]
+        }
         ]
     },
     {
     "id": 2,
     "name": "Physics",
-    "students": [
-         
+    "students": [{
+        "name": "Anant Jain",
+        "attendance": [{}]
+    },
+    {
+        "name": "Omar Shah",
+        "attendance": [{}]
+    }
           
     ]
     },
     {
     "id": 3,
     "name": "Literature",
-    "students": [
+    "students": [{
+        "name": "Eve Walker",
+        "attendance": [{}]
+    }
              
               
     ]
