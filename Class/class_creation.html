@@ -161,24 +161,17 @@
 
         let classes = []
 
-        fetch('./classes.json')
+        fetch('../json/classes.json')
             .then(response => response.json())
             .then(data => {
                 classes = data;
                 renderClassList();
+                renderStudentList();
             })
             .catch(error => console.error('Error loading students:', error));
 
 
         let students = [];
-
-        fetch('./students.json')
-            .then(response => response.json())
-            .then(data => {
-                students = data;
-                renderStudentList(); // Populate the student list after loading data
-            })
-            .catch(error => console.error('Error loading students:', error));
 
 
 
@@ -218,7 +211,9 @@
 
         function renderStudentList(filter = "") {
             studentListElement.innerHTML = "";
-            const filteredStudents = students.filter(student => 
+            const allStudents = classes.flatMap(classItem => classItem.students);
+
+            const filteredStudents = allStudents.filter(student => 
                 student.name.toLowerCase().includes(filter.toLowerCase())
             );
     
@@ -259,6 +254,12 @@
 
         // Initial render
         renderStudentList();      
+        function addStudentToClass(student) {
+            const hasCommonElements = array1.some(element => array2.includes(element));
+            if (includes(ClassListElement)){
+                
+            }
+        }
         </script>
     </body>
 </html>
