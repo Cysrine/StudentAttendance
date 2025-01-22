@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Creating a new class</title>
+
+        <style>
+            body {
+                font-family: 'Comic sans', sans-serif;
+                background-color: rgb(100, 181, 251);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;      
+            }
+            .class-list {
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            }
+            .student button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            }
+            .student {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            }
+            .student-list {
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            }
+            .search-box {
+            margin-bottom: 15px;
+            }
+            .main_container {
+                text-align: left;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                height: 700px;
+                width: 500px;
+                margin-top: 30px;
+            }
+            h2 {
+                font-size: 1.5em;
+                color: rgb(57, 129, 177);
+            }
+            input {
+                width: 51.5%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .name_form_container {
+                margin-top: 5px;
+                margin-bottom: 15px;
+            }
+            .name_form_container input {
+                margin-left: 15px;
+            }
+
+            .student_form_container {
+                margin-bottom: 15px;
+            }
+            .student_form_container input {
+                display: block;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                width: 65%;
+            }
+            .student_form_container #dropdown {
+                position: relative;
+                top: 100%;
+                left: 0;
+                width: 68%;
+                border-radius: 4px;
+                background-color: white;
+                border: 1px solid #ccc;
+                max-height: 150px;
+                overflow-y: auto;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                z-index: 1000;
+                display: none;
+            }
+            .student_form_container #dropdown li {
+                padding: 10 px;
+                margin: 5px;
+                cursor: pointer;
+            }
+            .student_form_container #dropdown li:hover {
+                background-color: #f0f0f0;
+            }
+
+            .buttons button {
+                background-color: deepskyblue;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                height: 40px;
+                margin-right: 15px;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+            <div class="main_container">
+
+                <h2>Creating a new class:</h2>
+
+                <div class="name_form_container">
+                    <!-- <label for="name">Choose a class:</label> -->
+                    <div class="class-list" id="class-list">
+                        <label for="class-name">Class name:</label>
+                        <input type="text" id="class-name" placeholder="Enter name...">
+                        <!-- Dynamic class list will be populated here -->
+                        <!-- at least was going to be... -->
+                    </div>
+                </div>
+
+                <h1>Add Students to Classes</h1>
+            
+                <div class="search-box">
+                    <label for="student-search">Search for a student:</label>
+                    <input type="text" id="student-search" placeholder="Type to search...">
+                </div>
+            
+                <div class="student-list" id="student-list">
+                    <!-- Dynamic student list will be populated here -->
+                </div>
+            
+                <div id="selected-students">
+                    <h2>Selected Students</h2>
+                    <ul id="selected-student-list">
+                        <!-- Selected students will appear here -->
+                    </ul>
+                </div>
+                <div class="buttons">
+                    <button id="cancel" onclick="goBack()">CANCEL</button>
+                    <button id="create" onclick="createClass()">CREATE</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+        
+        // DOWNLOAD LIVE SERVER EXTENSION AND RUN ON IT
+
+        let classes = []
+
+        fetch('../json/classes.json')
+            .then(response => response.json())
+            .then(data => {
+                classes = data;
+                renderClassList();
+            })
+            .catch(error => console.error('Error loading students:', error));
+
+
+        let students = [];
+
+
+
+        const studentListElement = document.getElementById('student-list');
+        const selectedStudentListElement = document.getElementById('selected-student-list');
+        const searchInput = document.getElementById('student-search');
+        const ClassListElement = document.getElementById('class-list');
+        let selectedClass = null; // To store the currently selected class
+
+
+        function checkClassName(className, filter = "") {
+
+            const filteredClasses = classes.filter(classItem =>
+                classItem.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            // const className = document.getElementById("class-name").value;
+
+            if (className == null || className == "") {
+                alert(`Class name field cannot be empty!`);
+                return 0;
+            }
+
+            filteredClasses.forEach(classItem => {
+                if (className == classItem.name) {
+                    alert(`Class "${className}" already exists! Choose another name.`);
+                    return 0;
+                }
+            })
+
+            return 1;
+        }
+
+
+        function renderClassList(filter = "") {
+            ClassListElement.innerHTML = ""; // Clear the class list
+
+            const filteredClasses = classes.filter(classItem =>
+                classItem.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filteredClasses.forEach(classItem => {
+                const classDiv = document.createElement('div');
+                classDiv.classList.add('class');
+
+                const className = document.createElement('span');
+                className.textContent = classItem.name;
+
+                const chooseButton = document.createElement('button');
+                chooseButton.textContent = "Choose";
+                chooseButton.onclick = () => {
+                    selectedClass = classItem;
+                    alert(`Class "${classItem.name}" selected!`);
+                };
+
+                classDiv.appendChild(className);
+                classDiv.appendChild(chooseButton);
+                ClassListElement.appendChild(classDiv);
+            });
+        }
+
+        function renderStudentList(filter = "") {
+            studentListElement.innerHTML = "";
+            const allStudents = classes.flatMap(classItem => classItem.students);
+
+            const filteredStudents = allStudents.filter(student => 
+                student.name.toLowerCase().includes(filter.toLowerCase())
+            );
+    
+            filteredStudents.forEach(student => {
+                const studentDiv = document.createElement('div');
+                studentDiv.classList.add('student');
+        
+                const studentName = document.createElement('span');
+                studentName.textContent = student.name;
+        
+                const addButton = document.createElement('button');
+                addButton.textContent = "Add";
+                addButton.onclick = () => addStudentToClass(student);
+        
+                studentDiv.appendChild(studentName);
+                studentDiv.appendChild(addButton);
+                studentListElement.appendChild(studentDiv);
+            });
+        }
+
+        function addStudentToClass(student) {
+            const existingStudent = Array.from(selectedStudentListElement.children)
+                .some(listItem => listItem.textContent === (student.name + "Delete"));
+
+            if (existingStudent) {
+                alert(`${student.name} is already added!`);
+                return;
+            }
+
+            const listItem = document.createElement('li');
+            listItem.textContent = student.name;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = () => deleteStudentFromClass(student);
+            listItem.appendChild(deleteButton);
+
+            selectedStudentListElement.appendChild(listItem);
+        }
+
+        function deleteStudentFromClass(student) {
+
+            const selectedStudents = Array.from(selectedStudentListElement.children);
+            selectedStudents.forEach(selectedStudent => {
+                if (selectedStudent.textContent == (student.name + "Delete")) {
+                    selectedStudent.remove();
+                    return;
+                }
+            });
+        }
+
+        function createClass() {
+            const className = document.getElementById("class-name").value
+            const nameCheck = checkClassName(className);
+            if (nameCheck == 1) {
+                console.log("able to create a new class");
+                console.log("name: " + className);
+            } else {
+                console.log("unable to create a new class");
+            }
+        }
+
+        function goBack() {
+            console.log('going back');
+        }
+
+        searchInput.addEventListener('input', (event) => {
+            renderStudentList(event.target.value);
+        });
+
+        // Initial render
+        renderStudentList();      
+ 
+    
+        </script>
+    </body>
+</html>
