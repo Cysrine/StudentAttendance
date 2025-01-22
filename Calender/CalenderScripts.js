@@ -25,7 +25,7 @@ function generateTableHeaders(date)
         th.textContent = day;
         headerRow.appendChild(th);
     }
-            
+
     fetch('http://localhost:3000/home')
     .then(response => response.json())
     .then(data => 
@@ -43,11 +43,22 @@ function generateTableHeaders(date)
                     cell.textContent = student.name;
                     row.appendChild(cell);
                     for(let day = 1; day <= daysInMonth; day++)
+                        {
+                            const cell = document.createElement('td');
+                            cell.id = student.name + day;
+                            row.appendChild(cell);
+                        }
+                    const attendance = student.attendance
+                    attendance.forEach(entry => 
                     {
-                        const cell = document.createElement('td');
-                        cell.textContent = `Data ${day}`;
-                        row.appendChild(cell);
-                    } 
+                        if(currentDate.getMonth() === new Date(entry.date).getMonth())
+                        {
+                            const day = new Date(entry.date).getDate();
+                            const block = document.getElementById(student.name + day);
+                            block.textContent = entry.status;
+                        }
+                        
+                    })
                 })
             }
         });
