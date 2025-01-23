@@ -169,7 +169,7 @@
             .then(response => response.json())
             .then(data => {
                 classes = data;
-                renderClassList();
+                // renderClassList();
                 renderStudentList();
 
             })
@@ -177,7 +177,6 @@
 
 
         let students = [];
-
 
 
         const studentListElement = document.getElementById('student-list');
@@ -211,32 +210,32 @@
         }
 
 
-        function renderClassList(filter = "") {
-          //  ClassListElement.innerHTML = ""; // Clear the class list
+        // function renderClassList(filter = "") {
+        //   //  ClassListElement.innerHTML = ""; // Clear the class list
 
-            const filteredClasses = classes.filter(classItem =>
-                classItem.name.toLowerCase().includes(filter.toLowerCase())
-            );
+        //     const filteredClasses = classes.filter(classItem =>
+        //         classItem.name.toLowerCase().includes(filter.toLowerCase())
+        //     );
 
-            filteredClasses.forEach(classItem => {
-                const classDiv = document.createElement('div');
-                classDiv.classList.add('class');
+        //     filteredClasses.forEach(classItem => {
+        //         const classDiv = document.createElement('div');
+        //         classDiv.classList.add('class');
 
-                const className = document.createElement('span');
-                className.textContent = classItem.name;
+        //         const className = document.createElement('span');
+        //         className.textContent = classItem.name;
 
-                const chooseButton = document.createElement('button');
-                chooseButton.textContent = "Choose";
-                chooseButton.onclick = () => {
-                    selectedClass = classItem;
-                    alert(`Class "${classItem.name}" selected!`);
-                };
+        //         const chooseButton = document.createElement('button');
+        //         chooseButton.textContent = "Choose";
+        //         chooseButton.onclick = () => {
+        //             selectedClass = classItem;
+        //             alert(`Class "${classItem.name}" selected!`);
+        //         };
 
-                classDiv.appendChild(className);
-                classDiv.appendChild(chooseButton);
-                ClassListElement.appendChild(classDiv);
-            });
-        }
+        //         classDiv.appendChild(className);
+        //         classDiv.appendChild(chooseButton);
+        //         ClassListElement.appendChild(classDiv);
+        //     });
+        // }
 
         function renderStudentList(filter = "") {
             studentListElement.innerHTML = "";
@@ -296,12 +295,29 @@
 
         function createClass() {
             const className = document.getElementById("class-name").value
+            const selectedStudentsElem = Array.from(selectedStudentListElement.children);
+            const selectedStudents = [];
+            selectedStudentsElem.forEach(student => {
+                    selectedStudents.push(student.textContent.slice(0, -6));
+                });
+
             const nameCheck = checkClassName(className);
             if (nameCheck == 1) {
-                console.log("able to create a new class");
-                console.log("name: " + className);
-            } else {
-                console.log("unable to create a new class");
+
+                const jsonClass = {
+                    id : "num",
+                    name : className,
+                    students : []
+                };
+                selectedStudents.forEach(student => {
+                    const jsonStudent = {
+                        name : student,
+                        attendance : []
+                    }
+                    jsonClass.students.push(jsonStudent);
+                })
+
+                console.log(jsonClass);
             }
         }
 
@@ -314,13 +330,8 @@
         });
 
         // Initial render
-        renderStudentList();      
-        // function addStudentToClass(student) {
-        //     const hasCommonElements = array1.some(element => array2.includes(element));
-        //     if (includes(ClassListElement)){
-                
-        //     }
-        // }
+        renderStudentList();
+
         </script>
     </body>
 </html>
