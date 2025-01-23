@@ -25,34 +25,42 @@ body {
     text-decoration: none;
 }
 
-table.class-table, th, td {
-    background-color: rgb(255, 255, 255);
-    border: solid 1px #0a0909;
+table.class-table {
+    background-color: rgb(255, 255, 255); 
+    border: solid 2px #0a0909; 
     border-collapse: collapse;
-    padding: 2px 3px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10%;
-    width: 15%;
-    height: 10%;
+    width: 50%;
     border-radius: 10px;
-    border: 1px solid #000;
+}
+
+th, td {
+    border: solid 2px #0a0909; 
+    padding: 20px; 
+    text-align: center; 
+    height: 80px; 
+    vertical-align: middle; 
 }
 
 th { 
     font-weight: bold;
-    font-size: 26px;
+    font-size: 32px;
+    padding: 20px;
 }
 
 td { 
-    font-size: 20px;
+    font-size: 24px; 
+    padding: 20px;
 }
 
 table td a {
     color: black;
     text-decoration: underline;
     font-weight: bold;
+    font-size: 20px;
 }
 
 table td a:hover {
