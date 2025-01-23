@@ -125,11 +125,15 @@
                 <h2>Creating a new class:</h2>
 
                 <div class="name_form_container">
-                    <label for="name">Choose a class:</label>
+                    <!-- <label for="name">Choose a class:</label> -->
                     <div class="class-list" id="class-list">
+                        <label for="class-name">Class name:</label>
+                        <input type="text" id="class-name" placeholder="Enter name...">
                         <!-- Dynamic class list will be populated here -->
+                        <!-- at least was going to be... -->
                     </div>
                 </div>
+
                 <h1>Add Students to Classes</h1>
             
                 <div class="search-box">
@@ -148,8 +152,8 @@
                     </ul>
                 </div>
                 <div class="buttons">
-                    <button id="cancel">CANCEL</button>
-                    <button id="create">CREATE</button>
+                    <button id="cancel" onclick="goBack()">CANCEL</button>
+                    <button id="create" onclick="createClass()">CREATE</button>
                 </div>
             </div>
         </div>
@@ -161,25 +165,18 @@
 
         let classes = []
 
-        fetch('./classes.json')
+        fetch('../json/classes.json')
             .then(response => response.json())
             .then(data => {
                 classes = data;
-                renderClassList();
+                // renderClassList();
+                renderStudentList();
+
             })
             .catch(error => console.error('Error loading students:', error));
 
 
         let students = [];
-
-        fetch('./students.json')
-            .then(response => response.json())
-            .then(data => {
-                students = data;
-                renderStudentList(); // Populate the student list after loading data
-            })
-            .catch(error => console.error('Error loading students:', error));
-
 
 
         const studentListElement = document.getElementById('student-list');
@@ -189,36 +186,62 @@
         let selectedClass = null; // To store the currently selected class
 
 
-        function renderClassList(filter = "") {
-            ClassListElement.innerHTML = ""; // Clear the class list
+        function checkClassName(className, filter = "") {
 
             const filteredClasses = classes.filter(classItem =>
                 classItem.name.toLowerCase().includes(filter.toLowerCase())
             );
 
+            // const className = document.getElementById("class-name").value;
+
+            if (className == null || className == "") {
+                alert(`Class name field cannot be empty!`);
+                return 0;
+            }
+
             filteredClasses.forEach(classItem => {
-                const classDiv = document.createElement('div');
-                classDiv.classList.add('class');
+                if (className == classItem.name) {
+                    alert(`Class "${className}" already exists! Choose another name.`);
+                    return 0;
+                }
+            })
 
-                const className = document.createElement('span');
-                className.textContent = classItem.name;
-
-                const chooseButton = document.createElement('button');
-                chooseButton.textContent = "Choose";
-                chooseButton.onclick = () => {
-                    selectedClass = classItem;
-                    alert(`Class "${classItem.name}" selected!`);
-                };
-
-                classDiv.appendChild(className);
-                classDiv.appendChild(chooseButton);
-                ClassListElement.appendChild(classDiv);
-            });
+            return 1;
         }
+
+
+        // function renderClassList(filter = "") {
+        //   //  ClassListElement.innerHTML = ""; // Clear the class list
+
+        //     const filteredClasses = classes.filter(classItem =>
+        //         classItem.name.toLowerCase().includes(filter.toLowerCase())
+        //     );
+
+        //     filteredClasses.forEach(classItem => {
+        //         const classDiv = document.createElement('div');
+        //         classDiv.classList.add('class');
+
+        //         const className = document.createElement('span');
+        //         className.textContent = classItem.name;
+
+        //         const chooseButton = document.createElement('button');
+        //         chooseButton.textContent = "Choose";
+        //         chooseButton.onclick = () => {
+        //             selectedClass = classItem;
+        //             alert(`Class "${classItem.name}" selected!`);
+        //         };
+
+        //         classDiv.appendChild(className);
+        //         classDiv.appendChild(chooseButton);
+        //         ClassListElement.appendChild(classDiv);
+        //     });
+        // }
 
         function renderStudentList(filter = "") {
             studentListElement.innerHTML = "";
-            const filteredStudents = students.filter(student => 
+            const allStudents = classes.flatMap(classItem => classItem.students);
+
+            const filteredStudents = allStudents.filter(student => 
                 student.name.toLowerCase().includes(filter.toLowerCase())
             );
     
@@ -241,7 +264,7 @@
 
         function addStudentToClass(student) {
             const existingStudent = Array.from(selectedStudentListElement.children)
-                .some(listItem => listItem.textContent === student.name);
+                .some(listItem => listItem.textContent === (student.name + "Delete"));
 
             if (existingStudent) {
                 alert(`${student.name} is already added!`);
@@ -250,7 +273,56 @@
 
             const listItem = document.createElement('li');
             listItem.textContent = student.name;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = () => deleteStudentFromClass(student);
+            listItem.appendChild(deleteButton);
+
             selectedStudentListElement.appendChild(listItem);
+        }
+
+        function deleteStudentFromClass(student) {
+
+            const selectedStudents = Array.from(selectedStudentListElement.children);
+            selectedStudents.forEach(selectedStudent => {
+                if (selectedStudent.textContent == (student.name + "Delete")) {
+                    selectedStudent.remove();
+                    return;
+                }
+            });
+        }
+
+        function createClass() {
+            const className = document.getElementById("class-name").value
+            const selectedStudentsElem = Array.from(selectedStudentListElement.children);
+            const selectedStudents = [];
+            selectedStudentsElem.forEach(student => {
+                    selectedStudents.push(student.textContent.slice(0, -6));
+                });
+
+            const nameCheck = checkClassName(className);
+            if (nameCheck == 1) {
+
+                const jsonClass = {
+                    id : "num",
+                    name : className,
+                    students : []
+                };
+                selectedStudents.forEach(student => {
+                    const jsonStudent = {
+                        name : student,
+                        attendance : []
+                    }
+                    jsonClass.students.push(jsonStudent);
+                })
+
+                console.log(jsonClass);
+            }
+        }
+
+        function goBack() {
+            console.log('going back');
         }
 
         searchInput.addEventListener('input', (event) => {
@@ -258,7 +330,8 @@
         });
 
         // Initial render
-        renderStudentList();      
+        renderStudentList();
+
         </script>
     </body>
 </html>

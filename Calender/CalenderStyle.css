@@ -1,5 +1,14 @@
+body {
+    font-family: 'Comic sans', sans-serif;
+    background-color: rgb(100, 181, 251);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
 table {
+    background-color: rgb(255, 255, 255);
     width: 100%;
     border-collapse: collapse;
 }
@@ -19,9 +28,10 @@ body
     }
     .nav-buttons 
     {
+
         display: flex;
         justify-content: space-between;
-        margin: 10px 0;
+        margin: 10px 10px;
     }
     .present
     {
