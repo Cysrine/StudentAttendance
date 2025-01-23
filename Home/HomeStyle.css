@@ -22,3 +22,45 @@ td
 { 
     font-size: 20px;
 }
+body 
+{
+    font-family: 'Comic sans', sans-serif;
+    background-color: rgb(100, 181, 251);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+    .nav-buttons {
+        background-color: rgb(255, 255, 255);
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        border: solid 1px #0a0909;
+        }
+}
+table, th, td 
+{
+    background-color: rgb(255, 255, 255);
+    border: solid 1px #0a0909;
+    border-collapse: collapse;
+    padding: 2px 3px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 15%;
+    border-radius: 10px;
+    border: 1px solid #000;
+
+}
+
+th 
+{ 
+    font-weight:bold;
+    font-size: 26px;
+}
+td 
+{ 
+    font-size: 20px;
+}
