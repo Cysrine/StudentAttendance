@@ -46,6 +46,7 @@ function generateTableHeaders(date)
                         {
                             const cell = document.createElement('td');
                             cell.id = student.name + day;
+                            cell.addEventListener('click', markPresent);
                             row.appendChild(cell);
                         }
                     const attendance = student.attendance
@@ -56,6 +57,7 @@ function generateTableHeaders(date)
                             const day = new Date(entry.date).getDate();
                             const block = document.getElementById(student.name + day);
                             block.textContent = entry.status;
+                            block.classList.add(entry.status);
                         }
                         
                     })
@@ -70,6 +72,40 @@ function changeMonth(offset)
 {
     currentDate.setMonth(currentDate.getMonth() + offset);
     generateTableHeaders(currentDate);
+}
+function markPresent(event)
+{
+    const cell = event.target;
+    cell.classList.add('present');
+    cell.textContent = 'present';
+    cell.removeEventListener('click', markPresent);
+    cell.addEventListener('click', markAbsent);
+}
+function markAbsent(event)
+{
+    const cell = event.target;
+    cell.classList.add('absent');
+    cell.textContent = 'absent';
+    cell.removeEventListener('click', markAbsent);
+    cell.addEventListener('click', markIll);
+}
+function markIll(event)
+{
+    const cell = event.target;
+    cell.classList.add('ill');
+    cell.textContent = 'ill';
+    cell.removeEventListener('click', markIll);
+    cell.addEventListener('click', markClear);
+}
+function markClear(event)
+{
+    const cell = event.target;
+    cell.classList.remove('ill');
+    cell.classList.remove('absent');
+    cell.classList.remove('present');
+    cell.textContent = '';
+    cell.removeEventListener('click', markClear);
+    cell.addEventListener('click', markPresent);
 }
 
 document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));

@@ -1,0 +1,24 @@
+body 
+{
+    font-family: "Comic Sans", sans-serif;
+}
+table, th, td 
+{
+    border: solid 1px #0a0909;
+    border-collapse: collapse;
+    padding: 2px 3px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 70%;
+}
+th 
+{ 
+    font-weight:bold;
+    font-size: 26px;
+}
+td 
+{ 
+    font-size: 20px;
+}

@@ -9,7 +9,7 @@ fetch('http://localhost:3000/home')
             const cell = document.createElement('td'); // Create a single cell
             const link = document.createElement('a'); // Create an anchor tag
 
-            link.href = `../../Calender/Calender.html?class=${encodeURIComponent(item.name)}`; // Generate the link dynamically
+            link.href = `../Calender/Calender.html?class=${encodeURIComponent(item.name)}`; // Generate the link dynamically
             link.textContent = item.name; // Set the text content of the link to the class name
 
             cell.appendChild(link); // Append the link to the cell

@@ -1,3 +1,4 @@
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -7,14 +8,31 @@ th, td {
     padding: 8px;
     text-align: center;
 }
-.month-name {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
+body 
+{
+    .month-name 
+    {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .nav-buttons 
+    {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+    .present
+    {
+        background-color: #8cfa93;
+    }
+    .absent
+    {
+        background-color: #f6726b;
+    }
+    .ill
+    {
+        background-color: #e9fa8c;
+    }
 }
