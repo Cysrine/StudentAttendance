@@ -34,19 +34,35 @@ app.get('/home', (req, res) => {
 }); 
 
 app.post('/empty', (req, res) => {
-    const { className } = req.body;
+    const { className, studentName, month } = req.body;
         console.log("Entered Empty with:", className);
         let data = JSON.parse(fs.readFileSync('classes.json', 'utf-8'));
         console.log("Searching for class name");
         const course = data.find(course => course.name === className);
-        if (!course) {
-            console.log("Class not found")
-            return res.status(404).send({ error: 'Class not found' });
+        console.log("variable course: ", course.students);
+        const student = course.students.find(student => student.name === studentName);
+        console.log("variable student: ", student);
+        console.log("Attendance before clearing:", student.attendance);
+        for(let i = 0; i < student.attendance.length; i++)
+        {
+            let dateCheck = student.attendance[i];
+            if(month === new Date(dateCheck.date).getMonth())
+            {
+                console.log("Month found, clearing attendance", dateCheck.date);
+                student.attendance.splice(i,1);
+            }
         }
-        console.log("Class found");
-        course.students.forEach(student => {
-            student.attendance = [];
-        });
+        
+        // student.attendance.forEach(track => {
+        //     if(month === new Date(track.date).getMonth())
+        //     {   
+        //         console.log("Month found, clearing attendance", new);
+        //         track.date = '';
+        //         track.status = '';
+        //         console.log("Attendance cleared");
+        //     }
+        // });
+        console.log("Attendance after clearing:", student.attendance);
         console.log("Attendance cleared, Writing to JSON file");
         
         fs.writeFile('classes.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
@@ -57,8 +73,7 @@ app.post('/empty', (req, res) => {
 
             res.status(200).json({ message: 'Attendance deleted successfully', data: data });
         });
-
-})
+});
 
 app.post('/update', (req, res) => {
     const { className, studentName, attendance } = req.body;
@@ -95,7 +110,7 @@ app.post('/update', (req, res) => {
             console.log("Attendance added to array")
         }
         studentData.attendance.push(attendance);
-        console.log("Attendance pushed", studentData.attendance);
+        console.log("Attendance pushed");
 
         // Write the updated data back to the JSON file
         fs.writeFile('classes.json', JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {

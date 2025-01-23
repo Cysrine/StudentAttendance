@@ -5,6 +5,7 @@ let studentNames = [];
 
 function generateTableHeaders(date) 
 {
+    studentNames = [];
     const headerRow = document.getElementById('header-row');
     const dataRow = document.getElementById('data-row');
     const tableBody = document.getElementById('table-body');
@@ -62,10 +63,12 @@ function generateTableHeaders(date)
                         }
                         
                     })
+                    console.log("Student name var :", student.name);
                     studentNames.push(student.name);
                 })
             }
         });
+        console.log("Student Names:", studentNames);
     })
     .catch(error => console.error('Error fetching data:', error));
 }
@@ -73,33 +76,35 @@ function generateTableHeaders(date)
 async function updateAttendance()
 {
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    await fetch('http://localhost:3000/empty', {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({className: className}) // Convert the data object to JSON string
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Data successfully Deleted.");
-        } 
-        else {
-        console.error("Failed to delete data:", response.statusText);
-        }
-    })
-    .catch(error => console.error("Error:", error));
-
     for(let i = 0; i < studentNames.length; i++)
     {
+        await fetch('http://localhost:3000/empty', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({className: className, studentName: studentNames[i], month: currentDate.getMonth()}) // Convert the data object to JSON string
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Data successfully Deleted.");
+            } 
+            else {
+            console.error("Failed to delete data:", response.statusText);
+            }
+        })
+        .catch(error => console.error("Error:", error));
         for(let day = 1; day < daysInMonth; day++)
         {
             const update = document.getElementById(studentNames[i] + day);
             if(update.className)
             {
+                const formattedMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const formattedDay = String(day).padStart(2, '0');
+
                 const data = {
                     className: className,
                     studentName: studentNames[i],
                     attendance: {
-                        date: currentDate.getFullYear() +"-"+currentDate.getMonth()+1+"-"+day,
+                        date: `${currentDate.getFullYear()}-${formattedMonth}-${formattedDay}`,
                         status: update.className
                     }
                 }
@@ -118,11 +123,11 @@ async function updateAttendance()
                     }
                 })
                 .catch(error => console.error("Error:", error));
-            }
-                
+            }       
         }
-        
     }
+    let doneAlert = document.getElementById('message');
+    doneAlert.textContent = 'Attendance Updated';
 }
 
 
