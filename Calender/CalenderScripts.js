@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const className = urlParams.get('class');
 let currentDate = new Date();
+let studentNames = [];
 
 function generateTableHeaders(date) 
 {
@@ -61,11 +62,53 @@ function generateTableHeaders(date)
                         }
                         
                     })
+                    studentNames.push(student.name);
                 })
             }
         });
     })
     .catch(error => console.error('Error fetching data:', error));
+}
+
+async function updateAttendance()
+{
+    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    for(let i = 0; i < studentNames.length; i++)
+    {
+        for(let day = 1; day < daysInMonth; day++)
+        {
+            const update = document.getElementById(studentNames[i] + day);
+            if(update.className)
+            {
+                const data = {
+                    className: className,
+                    student: studentNames[i],
+                    attendance: {
+                        date: currentDate.getFullYear() +"-"+currentDate.getMonth()+1+"-"+day,
+                        status: update.className
+                    }
+                }
+                await fetch('http://localhost:3000/update', {
+                    method: 'PUT',
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if(response.ok)
+                    {
+                        console.log("Attendance updated successfully");
+                    }
+                    else
+                    {
+                        console.log("Error updating attendance");
+                    }
+                })
+                .catch(error => console.error('Caught Error', error));
+                
+            }
+        
+        }
+    }
 }
 
 function changeMonth(offset) 
@@ -76,38 +119,31 @@ function changeMonth(offset)
 function markPresent(event)
 {
     const cell = event.target;
-    cell.classList.add('present');
-    cell.textContent = 'present';
-    cell.removeEventListener('click', markPresent);
-    cell.addEventListener('click', markAbsent);
-}
-function markAbsent(event)
-{
-    const cell = event.target;
-    cell.classList.add('absent');
-    cell.textContent = 'absent';
-    cell.removeEventListener('click', markAbsent);
-    cell.addEventListener('click', markIll);
-}
-function markIll(event)
-{
-    const cell = event.target;
-    cell.classList.add('ill');
-    cell.textContent = 'ill';
-    cell.removeEventListener('click', markIll);
-    cell.addEventListener('click', markClear);
-}
-function markClear(event)
-{
-    const cell = event.target;
-    cell.classList.remove('ill');
-    cell.classList.remove('absent');
-    cell.classList.remove('present');
-    cell.textContent = '';
-    cell.removeEventListener('click', markClear);
-    cell.addEventListener('click', markPresent);
+    if(cell.classList.contains('present'))
+    {
+        cell.classList.add('absent');
+        cell.classList.remove('present');
+        cell.textContent = 'absent';
+    }
+    else if(cell.classList.contains('absent'))
+    {
+        cell.classList.add('ill');
+        cell.classList.remove('absent');
+        cell.textContent = 'ill';
+    }
+    else if(cell.classList.contains('ill'))
+    {
+        cell.classList.remove('ill');
+        cell.textContent = '';
+    }
+    else
+    {
+        cell.classList.add('present');
+        cell.textContent = 'present';
+    }
 }
 
 document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
 document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
+document.getElementById('updateButton').addEventListener('click', () => updateAttendance());
 generateTableHeaders(currentDate);

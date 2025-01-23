@@ -35,4 +35,11 @@ body
     {
         background-color: #e9fa8c;
     }
+    .updateButton
+    {
+        border: 2px black;
+        border-radius: 30%;
+        margin-top: 5%;
+        margin-left: 50%;
+    }
 }

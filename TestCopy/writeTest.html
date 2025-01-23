@@ -42,25 +42,22 @@ td
 </body>
 <script>
  // Define the attendance data to send
-const attendanceData = {
-    attendance: [
-        {
-            date: "2025-02-09",
-            status: "present"
-        }
-    ]
-};
-
+const Data = {
+            className: "Mathematics",
+            student: "John Doe",
+            attendance: {
+                date: "2025-01-04",
+                status: "test"
+            }
+        };
+async function test (data)
+{
 // Define the endpoint of your local server
-const endpoint = "http://localhost:3000/attendance.json"; // Update with your server's URL and file path
-
-// Send the data using a POST or PUT request
-fetch(endpoint, {
-    method: "PUT", // Use "POST" if you're adding new data, "PUT" to overwrite
-    headers: {
-        "Content-Type": "application/json" // Specify the content type as JSON
-    },
-    body: JSON.stringify(attendanceData) // Convert the data object to JSON string
+console.log("Data being sent:", data);
+const endpoint = await fetch('http://localhost:3000/update', {
+    method: "POST", // Use "POST" if you're adding new data, "PUT" to overwrite
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data) // Convert the data object to JSON string
 })
     .then(response => {
         if (response.ok) {
@@ -70,6 +67,7 @@ fetch(endpoint, {
         }
     })
     .catch(error => console.error("Error:", error));
-
+}
+test(Data);
 </script>
 </html>
