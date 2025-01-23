@@ -73,6 +73,21 @@ function generateTableHeaders(date)
 async function updateAttendance()
 {
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    await fetch('http://localhost:3000/empty', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({className: className}) // Convert the data object to JSON string
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Data successfully Deleted.");
+        } 
+        else {
+        console.error("Failed to delete data:", response.statusText);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+
     for(let i = 0; i < studentNames.length; i++)
     {
         for(let day = 1; day < daysInMonth; day++)
@@ -82,34 +97,34 @@ async function updateAttendance()
             {
                 const data = {
                     className: className,
-                    student: studentNames[i],
+                    studentName: studentNames[i],
                     attendance: {
                         date: currentDate.getFullYear() +"-"+currentDate.getMonth()+1+"-"+day,
                         status: update.className
                     }
                 }
+                console.log("Data being sent:", data);
                 await fetch('http://localhost:3000/update', {
-                    method: 'PUT',
+                    method: "POST", // Use "POST" if you're adding new data, "PUT" to overwrite
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data) // Convert the data object to JSON string
                 })
                 .then(response => {
-                    if(response.ok)
-                    {
-                        console.log("Attendance updated successfully");
-                    }
-                    else
-                    {
-                        console.log("Error updating attendance");
+                    if (response.ok) {
+                        console.log("Data successfully sent to the server.");
+                    } 
+                    else {
+                    console.error("Failed to send data:", response.statusText);
                     }
                 })
-                .catch(error => console.error('Caught Error', error));
-                
+                .catch(error => console.error("Error:", error));
             }
-        
+                
         }
+        
     }
 }
+
 
 function changeMonth(offset) 
 {

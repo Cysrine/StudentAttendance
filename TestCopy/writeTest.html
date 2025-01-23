@@ -44,7 +44,7 @@ td
  // Define the attendance data to send
 const Data = {
             className: "Mathematics",
-            student: "John Doe",
+            student: "Jmar Shah",
             attendance: {
                 date: "2025-01-04",
                 status: "test"
@@ -53,8 +53,8 @@ const Data = {
 async function test (data)
 {
 // Define the endpoint of your local server
-console.log("Data being sent:", data);
-const endpoint = await fetch('http://localhost:3000/update', {
+    console.log("Data being sent:", data);
+    await fetch('http://localhost:3000/update', {
     method: "POST", // Use "POST" if you're adding new data, "PUT" to overwrite
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data) // Convert the data object to JSON string

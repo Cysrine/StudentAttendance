@@ -34,7 +34,7 @@ app.post('/update', (req, res) => {
         if (!studentData) {
             return res.status(404).json({ error: 'Student not found' });
         }
-
+        delete studentData.attendance;
         // Add the attendance record
         if (!Array.isArray(studentData.attendance)) {
             studentData.attendance = [];
@@ -56,5 +56,5 @@ app.post('/update', (req, res) => {
 
 // Start the server
 app.listen(3000, () => {
-    console.log(`Server running on http://localhost:${3000}`);
+    console.log(`Server running on http://localhost:3000`);
 });

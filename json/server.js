@@ -33,39 +33,75 @@ app.get('/home', (req, res) => {
     }
 }); 
 
+app.post('/empty', (req, res) => {
+    const { className } = req.body;
+        console.log("Entered Empty with:", className);
+        let data = JSON.parse(fs.readFileSync('classes.json', 'utf-8'));
+        console.log("Searching for class name");
+        const course = data.find(course => course.name === className);
+        if (!course) {
+            console.log("Class not found")
+            return res.status(404).send({ error: 'Class not found' });
+        }
+        console.log("Class found");
+        course.students.forEach(student => {
+            student.attendance = [];
+        });
+        console.log("Attendance cleared, Writing to JSON file");
+        
+        fs.writeFile('classes.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
+            if (err) {
+                console.log("Error writing file:", err);
+                return res.status(500).send({ error: 'Error writing file' });
+            }
+
+            res.status(200).json({ message: 'Attendance deleted successfully', data: data });
+        });
+
+})
+
 app.post('/update', (req, res) => {
-    const { className, student, attendance } = req.body;
+    const { className, studentName, attendance } = req.body;
+    console.log("Data Received:", className, studentName, attendance);
 
     // Read the existing JSON file
     fs.readFile('classes.json', 'utf-8', (err, data) => {
         if (err) {
-            return res.status(500).json({ error: 'Error reading file' });
+            console.log("Error reading file:", err);
+            return res.status(500).send({ error: 'Error reading file' });
         }
 
         let jsonData = JSON.parse(data);
 
         // Find the class
-        const course = jsonData.find(c => c.className === className);
+        console.log("Finding class name");
+        const course = jsonData.find(course => course.name === className);
         if (!course) {
-            return res.status(404).json({ error: 'Class not found' });
+            console.log("Class not found")
+            return res.status(404).send({ error: 'Class not found' });
         }
 
         // Find the student
-        const studentData = course.students.find(s => s.name === student);
+        console.log("Finding student name");
+        const studentData = course.students.find(student => student.name === studentName);
         if (!studentData) {
-            return res.status(404).json({ error: 'Student not found' });
+            console.log("Student not found")
+            return res.status(404).send({ error: 'Student not found' });
         }
 
         // Add the attendance record
         if (!Array.isArray(studentData.attendance)) {
             studentData.attendance = [];
+            console.log("Attendance added to array")
         }
         studentData.attendance.push(attendance);
+        console.log("Attendance pushed", studentData.attendance);
 
         // Write the updated data back to the JSON file
         fs.writeFile('classes.json', JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
             if (err) {
-                return res.status(500).json({ error: 'Error writing file' });
+                console.log("Error writing file:", err);
+                return res.status(500).send({ error: 'Error writing file' });
             }
 
             res.status(200).json({ message: 'Attendance updated successfully', data: jsonData });
