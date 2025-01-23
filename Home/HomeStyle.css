@@ -1,9 +1,36 @@
+
 body 
 {
-    font-family: "Comic Sans", sans-serif;
+    font-family: 'Comic sans', sans-serif;
+    background-color: rgb(100, 181, 251);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+    .nav-buttons {
+        background-color: rgb(255, 255, 255);
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        border: solid 1px #0a0909;
+        }
 }
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+
+}
+
 table, th, td 
 {
+    background-color: rgb(255, 255, 255);
     border: solid 1px #0a0909;
     border-collapse: collapse;
     padding: 2px 3px;
@@ -11,8 +38,12 @@ table, th, td
     margin-left: auto;
     margin-right: auto;
     margin-top: 10%;
-    width: 70%;
+    width: 15%;
+    border-radius: 10px;
+    border: 1px solid #000;
+
 }
+
 th 
 { 
     font-weight:bold;
@@ -22,3 +53,5 @@ td
 { 
     font-size: 20px;
 }
+
+
