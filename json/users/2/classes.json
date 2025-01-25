@@ -45,12 +45,20 @@
         "name": "Qmar Shah 1",
         "attendance": [
           {
+            "date": "2024-12-13",
+            "status": "absent"
+          },
+          {
             "date": "2025-01-09",
             "status": "present"
           },
           {
-            "date": "2025-01-20",
-            "status": "ill"
+            "date": "2025-01-09",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "present"
           },
           {
             "date": "2025-01-09",
@@ -86,7 +94,7 @@
             "status": "absent"
           },
           {
-            "date": "2025-01-12",
+            "date": "2025-01-09",
             "status": "present"
           },
           {
@@ -94,7 +102,23 @@
             "status": "present"
           },
           {
+            "date": "2025-01-14",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-20",
+            "status": "ill"
+          },
+          {
+            "date": "2025-01-09",
+            "status": "present"
+          },
+          {
             "date": "2025-01-12",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-14",
             "status": "present"
           },
           {
@@ -110,7 +134,35 @@
       {
         "name": "Bmar Shah 1",
         "attendance": [
-          {}
+          {},
+          {
+            "date": "2025-01-15",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-13",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-14",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-16",
+            "status": "present"
+          },
+          {
+            "date": "2024-12-14",
+            "status": "present"
+          }
         ]
       }
     ]

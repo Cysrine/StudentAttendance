@@ -52,14 +52,15 @@ body
         margin-top: 5%;
         margin-left: 50%;
     }
-    .message
+    #message
     {
         position: relative;
         color: rgb(5, 115, 25);
         font-size: 16px;
         font-weight: bold;
-        margin-top: 10px;
+        margin-top: 20px;
         margin-left: 50%;
         background-color: rgb(174, 168, 168);
+        text-align: center;
     }
 }

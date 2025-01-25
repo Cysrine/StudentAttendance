@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const className = urlParams.get('class');
 const user = urlParams.get('user');
+const doneAlert = document.getElementById("message");
 let currentDate = new Date();
 let studentNames = [];
 console.log(className);
@@ -18,6 +19,7 @@ function generateTableHeaders(date)
     headerRow.innerHTML = '';
     dataRow.innerHTML = '';
     tableBody.innerHTML = '';
+    doneAlert.innerHTML = '';
 
     monthNameDiv.textContent = `${className} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
     const th = document.createElement('th');
@@ -135,8 +137,7 @@ async function updateAttendance()
                 .catch(error => console.error("Error:", error));
             }       
         }
-    }
-    let doneAlert = document.getElementById('message');
+    } 
     doneAlert.textContent = 'Attendance Updated';
 }
 
