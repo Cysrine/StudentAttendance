@@ -2,33 +2,34 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors'); // Import CORS
-
 const app = express();
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all origins
-
+let filePath = '';
 // Load users from the JSON file
-const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
-
 // Login endpoint
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
+    const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
     // Find the user in the JSON database
-    const user = users.find(user => user.username === username && user.password === password);
-
-    if (user) {
-        res.status(200).send({ message: 'Login successful' });
-    } else {
+    const data = users.find(user => user.username === username && user.password === password);
+    if (data) {
+        res.status(200).json({user: data.userId,});
+    } 
+    else {
         res.status(401).send({ message: 'Invalid username or password' });
     }
 }); 
 
-app.get('/home', (req, res) => {
+app.post('/home', (req, res) => {
+    const {user} = req.body;
     try {
-        const classes = JSON.parse(fs.readFileSync('classes.json', 'utf-8'));
+        filePath = './users/'+user+'/classes.json';
+        console.log("FilePath = ", filePath);
+        const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         res.status(200).json(classes);
-    } catch (error) {
+    } 
+    catch (error) {
         res.status(500).send({ message: 'Error reading classes.json file' });
     }
 }); 
@@ -36,7 +37,7 @@ app.get('/home', (req, res) => {
 app.post('/empty', (req, res) => {
     const { className, studentName, month } = req.body;
         console.log("Entered Empty with:", className);
-        let data = JSON.parse(fs.readFileSync('classes.json', 'utf-8'));
+        let data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         console.log("Searching for class name");
         const course = data.find(course => course.name === className);
         console.log("variable course: ", course.students);
@@ -65,7 +66,7 @@ app.post('/empty', (req, res) => {
         console.log("Attendance after clearing:", student.attendance);
         console.log("Attendance cleared, Writing to JSON file");
         
-        fs.writeFile('classes.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
+        fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
                 return res.status(500).send({ error: 'Error writing file' });
@@ -80,7 +81,7 @@ app.post('/update', (req, res) => {
     console.log("Data Received:", className, studentName, attendance);
 
     // Read the existing JSON file
-    fs.readFile('classes.json', 'utf-8', (err, data) => {
+    fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
             console.log("Error reading file:", err);
             return res.status(500).send({ error: 'Error reading file' });
@@ -113,7 +114,7 @@ app.post('/update', (req, res) => {
         console.log("Attendance pushed");
 
         // Write the updated data back to the JSON file
-        fs.writeFile('classes.json', JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
                 return res.status(500).send({ error: 'Error writing file' });

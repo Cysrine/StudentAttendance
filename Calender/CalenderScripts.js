@@ -1,7 +1,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const className = urlParams.get('class');
+const user = urlParams.get('user');
 let currentDate = new Date();
 let studentNames = [];
+console.log(className);
 
 function generateTableHeaders(date) 
 {
@@ -28,10 +30,18 @@ function generateTableHeaders(date)
         headerRow.appendChild(th);
     }
 
-    fetch('http://localhost:3000/home')
-    .then(response => response.json())
-    .then(data => 
-    {
+    fetch('http://localhost:3000/home', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: user })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the response as JSON
+    })
+    .then(data => {
         data.forEach(item => 
         {
             if(item.name === className)

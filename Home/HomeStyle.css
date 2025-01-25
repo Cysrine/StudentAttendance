@@ -6,6 +6,10 @@ body {
     height: 100vh;
     margin: 0;
 }
+#teacherName {
+    text-align: center;
+    padding-top: 20px;
+}
 
 .nav-buttons {
     background-color: rgb(255, 255, 255);

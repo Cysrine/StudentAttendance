@@ -9,11 +9,17 @@ async function handleLogin() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
-
+        const user = await response.json();
+        console.log("User ID Login = ", user);
         if (response.ok) {
             message.textContent = 'Login successful';
             message.style.color = 'green';
-            setTimeout(() => { window.location.href = '../Home/home.html'; }, 3000);
+            if(user.user === 'admin') {
+                setTimeout(() => {window.location.href = `../Admin/admin.html`},3000);    
+            }
+            else {
+                setTimeout(() => {window.location.href = `../Home/home.html?user=${encodeURIComponent(user.user)}`},3000);
+            }
         } else {
             message.textContent = 'Invalid username or password';
             message.style.color = 'red';
