@@ -15,8 +15,24 @@
             "status": "absent"
           },
           {
+            "date": "2025-01-09",
+            "status": "present"
+          },
+          {
             "date": "2025-01-12",
             "status": "absent"
+          },
+          {
+            "date": "2025-01-13",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-14",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "present"
           },
           {
             "date": "2025-01-24",
@@ -34,6 +50,26 @@
           {
             "date": "2025-06-12",
             "status": "absent"
+          },
+          {
+            "date": "2025-01-09",
+            "status": "absent"
+          },
+          {
+            "date": "2025-01-12",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-13",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-14",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "present"
           },
           {
             "date": "2025-01-20",
@@ -61,6 +97,14 @@
             "status": "present"
           },
           {
+            "date": "2024-12-10",
+            "status": "present"
+          },
+          {
+            "date": "2024-12-13",
+            "status": "absent"
+          },
+          {
             "date": "2025-01-09",
             "status": "present"
           },
@@ -69,20 +113,20 @@
             "status": "absent"
           },
           {
+            "date": "2025-01-13",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-14",
+            "status": "present"
+          },
+          {
             "date": "2025-01-15",
             "status": "present"
           },
           {
             "date": "2025-01-20",
             "status": "ill"
-          },
-          {
-            "date": "2024-12-10",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-13",
-            "status": "absent"
           }
         ]
       },
@@ -98,16 +142,16 @@
             "status": "present"
           },
           {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
             "date": "2025-01-20",
             "status": "ill"
+          },
+          {
+            "date": "2025-01-12",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-15",
+            "status": "absent"
           },
           {
             "date": "2025-01-09",
@@ -115,6 +159,10 @@
           },
           {
             "date": "2025-01-12",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-13",
             "status": "present"
           },
           {
@@ -140,8 +188,24 @@
             "status": "present"
           },
           {
-            "date": "2025-01-15",
+            "date": "2025-01-14",
             "status": "present"
+          },
+          {
+            "date": "2025-01-16",
+            "status": "present"
+          },
+          {
+            "date": "2024-12-14",
+            "status": "present"
+          },
+          {
+            "date": "2025-01-09",
+            "status": "ill"
+          },
+          {
+            "date": "2025-01-12",
+            "status": "absent"
           },
           {
             "date": "2025-01-13",
@@ -157,10 +221,6 @@
           },
           {
             "date": "2025-01-16",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-14",
             "status": "present"
           }
         ]

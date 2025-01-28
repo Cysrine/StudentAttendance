@@ -53,16 +53,7 @@ app.post('/empty', (req, res) => {
                 student.attendance.splice(i,1);
             }
         }
-        
-        // student.attendance.forEach(track => {
-        //     if(month === new Date(track.date).getMonth())
-        //     {   
-        //         console.log("Month found, clearing attendance", new);
-        //         track.date = '';
-        //         track.status = '';
-        //         console.log("Attendance cleared");
-        //     }
-        // });
+
         console.log("Attendance after clearing:", student.attendance);
         console.log("Attendance cleared, Writing to JSON file");
         
@@ -122,6 +113,18 @@ app.post('/update', (req, res) => {
 
             res.status(200).json({ message: 'Attendance updated successfully', data: jsonData });
         });
+    });
+});
+
+app.get('/userList', (req, res) => {
+    fs.readFile('users.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.log("Error reading file:", err);
+            return res.status(500).send({ error: 'Error reading file' });
+        }
+
+        const userList = JSON.parse(data);
+        res.json(userList);
     });
 });
 

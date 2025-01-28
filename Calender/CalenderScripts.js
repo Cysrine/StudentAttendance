@@ -60,7 +60,7 @@ function generateTableHeaders(date)
                         {
                             const cell = document.createElement('td');
                             cell.id = student.name + day;
-                            cell.addEventListener('click', markPresent);
+                            cell.addEventListener('click', markAttendance);
                             row.appendChild(cell);
                         }
                     const attendance = student.attendance
@@ -147,7 +147,7 @@ function changeMonth(offset)
     currentDate.setMonth(currentDate.getMonth() + offset);
     generateTableHeaders(currentDate);
 }
-function markPresent(event)
+function markAttendance(event)
 {
     const cell = event.target;
     if(cell.classList.contains('present'))

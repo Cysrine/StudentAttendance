@@ -1,0 +1,11 @@
+table {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td, tr, thead {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    height: 20px;
+}
