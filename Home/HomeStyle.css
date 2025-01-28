@@ -1,14 +1,78 @@
 body {
-    font-family: 'Comic sans', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: rgb(100, 181, 251);
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
     height: 100vh;
-    margin: 0;
+    margin: 20px;
 }
-#teacherName {
+
+#classesTitle {
+    align-self: flex-start;
+    font-size: 40px;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.class-container {
+    display: table;
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.class-row {
+    display: table-row;
+}
+
+.class-card {
+    display: table-cell;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    height: 150px;
     text-align: center;
-    padding-top: 20px;
+    vertical-align: middle;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    cursor: pointer;
+    border: solid 2px black;
+}
+
+.class-card img {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.class-card a {
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 150px;
+}
+
+.class-card a:hover {
+    color: rgb(100, 181, 251);
+}
+
+.nav-buttons a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-buttons a:hover {
+    color: rgb(100, 181, 251);
 }
 
 .nav-buttons {
@@ -17,57 +81,6 @@ body {
     bottom: 10px;
     right: 10px;
     border: solid 1px #0a0909;
-}
-
-.button {
-    display: inline-block;
     padding: 10px 20px;
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
-    text-align: center;
-    text-decoration: none;
-}
-
-table.class-table {
-    background-color: rgb(255, 255, 255); 
-    border: solid 2px #0a0909; 
-    border-collapse: collapse;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-    width: 50%;
     border-radius: 10px;
-}
-
-th, td {
-    border: solid 2px #0a0909; 
-    padding: 20px; 
-    text-align: center; 
-    height: 80px; 
-    vertical-align: middle; 
-}
-
-th { 
-    font-weight: bold;
-    font-size: 32px;
-    padding: 20px;
-}
-
-td { 
-    font-size: 24px; 
-    padding: 20px;
-}
-
-table td a {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-table td a:hover {
-    color: rgb(100, 181, 251);
-    text-decoration: none;
 }
