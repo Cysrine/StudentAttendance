@@ -154,25 +154,34 @@
                 <div class="buttons">
                     <button id="cancel" onclick="goBack()">CANCEL</button>
                     <button id="create" onclick="createClass()">CREATE</button>
+                    <!-- <a href="../Home/home.html?user=2" class="button">Cancel</a>
+                    <a href="../Home/home.html?user=2" class="button" onclick="createClass()">Create</a> -->
                 </div>
             </div>
         </div>
 
         <script>
             const urlParams = new URLSearchParams(window.location.search);
-            const userId = 2 //urlParams.get('userId');
+            const user = urlParams.get('user');
+
+            let classes = [];
+            let students = [];
 
             fetch('http://localhost:3000/home', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId })
+            body: JSON.stringify({ user: user })
             })
-            .then(response => {
-                return resonse.json
-            })
-            .then(data => {
-                //data.name
-            })
+            .then(response => response.json())
+            .then(data => classes = data);
+
+            fetch('http://localhost:3000/load_students')
+            .then(response => response.json())
+            .then(data => students = data);
+
+            console.log(classes);
+            console.log(students);
+
             // Connecting to the server and getting user/<user_id>/classes.json & students.json
             // data from user/<user_id>/classes.json goes to: const classes
             // data from students.json goes to: const students
@@ -283,13 +292,28 @@
                     })
 
                     console.log(jsonClass);
+                    fetch('http://localhost:3000/create_class', {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(jsonClass)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("Data successfully sent to the server.");
+                        } 
+                        else {
+                        console.error("Failed to send data:", response.statusText);
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                    }
 
-                    // Adding jsonClass to user/<user_id>/classes.json
-                }
+                    window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
             }
 
             function goBack() {
-                console.log('going back');
+                console.log("Going back to the previous page...");
+                window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
             }
 
             searchInput.addEventListener('input', (event) => {

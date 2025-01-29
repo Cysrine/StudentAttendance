@@ -70,6 +70,18 @@ app.post('/home', (req, res) => {
     }
 }); 
 
+app.post('/load_students', (req, res) => {
+    try {
+        filePath = './students.json';
+        console.log("FilePath = ", filePath);
+        const students = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        res.status(200).json(students);
+    }
+    catch (error) {
+        res.status(500).send({ message: 'Error reading students.json file' });
+    }
+});
+
 app.post('/empty', (req, res) => {
     const { className, studentName, month } = req.body;
         console.log("Entered Empty with:", className);
@@ -148,6 +160,43 @@ app.post('/update', (req, res) => {
             }
 
             res.status(200).json({ message: 'Attendance updated successfully', data: jsonData });
+        });
+    });
+});
+
+app.post('/create_class', (req, res) => {
+    const { classID, className, students } = req.body;
+    console.log("Data Received:", classID, className, students);
+
+    // Read the existing JSON file
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.log("Error reading file:", err);
+            return res.status(500).send({ error: 'Error reading file' });
+        }
+
+        let jsonData = JSON.parse(data);
+
+        // Find the class
+        console.log("Finding class id");
+        const course = jsonData.find(course => course.id === classID);
+        if (course) {
+            console.log("Class already exists")
+            return res.status(404).send({ error: 'Class already exists' });
+        }
+
+        // Add the class
+        jsonData.push({ id: classID, name: className, students: students });
+        console.log("Class pushed");
+
+        // Write the updated data back to the JSON file
+        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+            if (err) {
+                console.log("Error writing file:", err);
+                return res.status(500).send({ error: 'Error writing file' });
+            }
+
+            res.status(200).json({ message: 'Class created successfully', data: jsonData });
         });
     });
 });
