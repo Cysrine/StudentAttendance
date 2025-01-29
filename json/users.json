@@ -9,18 +9,18 @@
         "username": "teacher1",
         "password": "password1",
         "teacherName": "teacher1",
-        "userId": "2"
+        "userId": 2
     },
     {
         "username": "teacher2",
         "password": "password2",
         "teacherName": "teacher2",
-        "userId": "3"
+        "userId": 4
     },
     {
         "username": "teacher3",
         "password": "password3",
         "teacherName": "teacher3",
-        "userId": "4"
+        "userId": 4
     }
 ]

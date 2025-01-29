@@ -25,8 +25,7 @@ fetch('http://localhost:3000/home', {
     
     data.forEach(item => {
         const card = document.createElement('div');
-        card.classList.add('class-card');
-        
+        card.classList.add('class-card'); 
         const icon = document.createElement('img');
         icon.src = iconMap[item.name] || 'default.png';
         icon.alt = `${item.name} icon`;

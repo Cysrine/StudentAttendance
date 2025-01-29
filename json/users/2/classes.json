@@ -1,332 +1,80 @@
 [
   {
-    "id": 1,
     "name": "Mathematics",
     "students": [
       {
-        "name": "John Doe 1",
+        "id": 1,
+        "name": "Lisa Moore",
         "attendance": [
-          {
-            "date": "2025-02-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-13",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-24",
-            "status": "ill"
-          }
+          
         ]
       },
       {
-        "name": "Jmar Shah 1",
+        "id": 3,
+        "name": "Matthew Alexander DVM",
         "attendance": [
-          {
-            "date": "2025-03-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-06-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-13",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-20",
-            "status": "ill"
-          }
+          
         ]
       },
       {
-        "name": "Qmar Shah 1",
+        "id": 4,
+        "name": "Hunter Estes",
         "attendance": [
-          {
-            "date": "2024-12-13",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-10",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-13",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-13",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-20",
-            "status": "ill"
-          }
+          
         ]
       },
       {
-        "name": "Smar Shah 1",
+        "id": 5,
+        "name": "Bradley Bowman",
         "attendance": [
-          {
-            "date": "2025-08-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-20",
-            "status": "ill"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-13",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-20",
-            "status": "ill"
-          }
-        ]
-      },
-      {
-        "name": "Bmar Shah 1",
-        "attendance": [
-          {},
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-16",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-09",
-            "status": "ill"
-          },
-          {
-            "date": "2025-01-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-13",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-15",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-16",
-            "status": "present"
-          }
+          
         ]
       }
     ]
   },
   {
-    "id": 2,
     "name": "Physics",
     "students": [
       {
-        "name": "Anant Jain 1",
+        "id": 6,
+        "name": "Darrell Hood",
         "attendance": [
-          {
-            "date": "2025-01-10",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-08",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-20",
-            "status": "ill"
-          }
+          
         ]
       },
       {
-        "name": "Omar Shah 1",
+        "id": 7,
+        "name": "David Hoover",
         "attendance": [
-          {
-            "date": "2025-01-06",
-            "status": "present"
-          },
-          {
-            "date": "2025-08-12",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-07",
-            "status": "ill"
-          }
+          
         ]
       }
     ]
   },
   {
-    "id": 3,
     "name": "Literature",
     "students": [
       {
-        "name": "Eve Walker 1",
+        "id": 8,
+        "name": "Tiffany Roberson",
         "attendance": [
-          {
-            "date": "2025-02-18",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-15",
-            "status": "present"
-          },
-          {
-            "date": "2024-12-19",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-11",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-18",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-01",
-            "status": "absent"
-          },
-          {
-            "date": "2025-01-03",
-            "status": "ill"
-          },
-          {
-            "date": "2025-01-11",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-14",
-            "status": "present"
-          },
-          {
-            "date": "2025-01-18",
-            "status": "present"
-          },
-          {
-            "date": "2025-02-16",
-            "status": "absent"
-          },
-          {
-            "date": "2025-02-18",
-            "status": "present"
-          },
-          {
-            "date": "2025-02-21",
-            "status": "present"
-          }
+          
         ]
+      }
+    ]
+  },
+  {
+    "name": "Astrology",
+    "students": [
+      {
+        "id": 10,
+        "name": "Janet Figueroa",
+        "attendance": []
+      },
+      {
+        "id": 9,
+        "name": "Sylvia Clark",
+        "attendance": []
       }
     ]
   }
