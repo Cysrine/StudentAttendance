@@ -168,19 +168,37 @@
             let students = [];
 
             fetch('http://localhost:3000/home', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user: user })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user: user })
             })
-            .then(response => response.json())
-            .then(data => classes = data);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                classes = data;
+                console.log('Classes (let):', classes);
+            });
 
-            fetch('http://localhost:3000/load_students')
-            .then(response => response.json())
-            .then(data => students = data);
-
-            console.log(classes);
-            console.log(students);
+            fetch('http://localhost:3000/load_students', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify()
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                students = data;
+                renderStudentList();
+                console.log('Students (let):', students);
+            });
 
             // Connecting to the server and getting user/<user_id>/classes.json & students.json
             // data from user/<user_id>/classes.json goes to: const classes
@@ -213,9 +231,9 @@
 
             function renderStudentList(filter = "") {
                 studentListElement.innerHTML = "";
-                const allStudents = students.flatMap(studentItem => studentItem);
+                const allStudents = students;
 
-                const filteredStudents = allStudents.filter(student => 
+                const filteredStudents = students.filter(student => 
                     student.name.toLowerCase().includes(filter.toLowerCase())
                 );
         
@@ -268,7 +286,7 @@
             }
 
             function createClass() {
-                const className = document.getElementById("class-name").value
+                const className = document.getElementById("class-name").value;
                 const selectedStudentsElem = Array.from(selectedStudentListElement.children);
                 const selectedStudents = [];
                 selectedStudentsElem.forEach(student => {
@@ -279,12 +297,12 @@
                 if (nameCheck == 1) {
 
                     const jsonClass = {
-                        id : classes.length + 1,
                         name : className,
                         students : []
                     };
                     selectedStudents.forEach(student => {
                         const jsonStudent = {
+                            id : students.find(studentItem => studentItem.name === student).id,
                             name : student,
                             attendance : []
                         }
@@ -292,6 +310,7 @@
                     })
 
                     console.log(jsonClass);
+
                     fetch('http://localhost:3000/create_class', {
                         method: "POST",
                         headers: {"Content-Type": "application/json"},
@@ -300,15 +319,14 @@
                     .then(response => {
                         if (response.ok) {
                             console.log("Data successfully sent to the server.");
+                            window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
                         } 
                         else {
                         console.error("Failed to send data:", response.statusText);
                         }
                     })
                     .catch(error => console.error("Error:", error));
-                    }
-
-                    window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
+                }
             }
 
             function goBack() {
@@ -319,9 +337,6 @@
             searchInput.addEventListener('input', (event) => {
                 renderStudentList(event.target.value);
             });
-
-            // Initial render
-            renderStudentList();
 
         </script>
     </body>

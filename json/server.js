@@ -165,40 +165,47 @@ app.post('/update', (req, res) => {
 });
 
 app.post('/create_class', (req, res) => {
-    const { classID, className, students } = req.body;
-    console.log("Data Received:", classID, className, students);
+    const { name, students } = req.body;
+    console.log("Data Received:", name, students);
+
+    // i'm going to work on this later
+    // it opens students.json and tries to write a new class into it
+    // (and succeeds...)
+    // WHILE it should open classes.json
+    // but it's almost midnight and i'm tired
 
     // Read the existing JSON file
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-        if (err) {
-            console.log("Error reading file:", err);
-            return res.status(500).send({ error: 'Error reading file' });
-        }
+    // fs.readFile(filePath, 'utf-8', (err, data) => {
+    //     if (err) {
+    //         console.log("Error reading file:", err);
+    //         return res.status(500).send({ error: 'Error reading file' });
+    //     }
 
-        let jsonData = JSON.parse(data);
+    //     let jsonData = JSON.parse(data);
+    //     console.log("JSON Data:", jsonData);
 
-        // Find the class
-        console.log("Finding class id");
-        const course = jsonData.find(course => course.id === classID);
-        if (course) {
-            console.log("Class already exists")
-            return res.status(404).send({ error: 'Class already exists' });
-        }
+    //     // Find the class
+    //     console.log("Finding class name");
+    //     const course = jsonData.find(course => course.name === name);
+    //     if (course) {
+    //         console.log("Class already exists")
+    //         return res.status(500).send({ error: 'Class already exists' });
+    //     }
 
-        // Add the class
-        jsonData.push({ id: classID, name: className, students: students });
-        console.log("Class pushed");
+    //     // Add the class
+    //     jsonData.push({ name: name, students: students });
+    //     console.log("Class pushed");
 
-        // Write the updated data back to the JSON file
-        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
-            if (err) {
-                console.log("Error writing file:", err);
-                return res.status(500).send({ error: 'Error writing file' });
-            }
+    //     // Write the updated data back to the JSON file
+    //     fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+    //         if (err) {
+    //             console.log("Error writing file:", err);
+    //             return res.status(500).send({ error: 'Error writing file' });
+    //         }
 
-            res.status(200).json({ message: 'Class created successfully', data: jsonData });
-        });
-    });
+    //         res.status(200).json({ message: 'Class created successfully', data: jsonData });
+    //     });
+    // });
 });
 
 app.get('/userList', (req, res) => {
