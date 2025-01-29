@@ -23,7 +23,7 @@ async function generateTable() {
         changeCell.innerHTML = `<button>Edit</button>`; // Add a button for "Change"
         changeCell.addEventListener('click', () => edit(data.userId[i]));
         row.appendChild(changeCell);
-        // Append the row to the table body
+        // Append the row to the table body.
         tableBody.appendChild(row);
     }
 }

@@ -159,7 +159,20 @@
         </div>
 
         <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = 2 //urlParams.get('userId');
 
+            fetch('http://localhost:3000/home', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId })
+            })
+            .then(response => {
+                return resonse.json
+            })
+            .then(data => {
+                //data.name
+            })
             // Connecting to the server and getting user/<user_id>/classes.json & students.json
             // data from user/<user_id>/classes.json goes to: const classes
             // data from students.json goes to: const students
