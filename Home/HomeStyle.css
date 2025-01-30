@@ -64,23 +64,29 @@ body {
     color: rgb(100, 181, 251);
 }
 
-.nav-buttons a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.nav-buttons a:hover {
-    color: rgb(100, 181, 251);
-}
-
 .nav-buttons {
-    background-color: rgb(255, 255, 255);
     position: fixed;
     bottom: 10px;
     right: 10px;
-    border: solid 1px #0a0909;
-    padding: 10px 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
     border-radius: 10px;
+    font-weight: bold;
+}
+
+.nav-buttons button:hover {
+    color: rgb(100, 181, 251);
 }
