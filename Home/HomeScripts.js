@@ -17,21 +17,21 @@ fetch('http://localhost:3000/home', {
     const classContainer = document.getElementById('classCards');
     classContainer.innerHTML = '';
     
-    const iconMap = {
-        'Mathematics': 'icons/math.png',
-        'Physics': 'icons/phys.png',
-        'Literature': 'icons/lit.png',
-        'Astrology': 'icons/astr.png',
-        'Sport': 'icons/sport.png'
-    };
+    // const iconMap = {
+    //     'Mathematics': 'icons/math.png',
+    //     'Physics': 'icons/phys.png',
+    //     'Literature': 'icons/lit.png',
+    //     'Astrology': 'icons/astr.png',
+    //     'Sport': 'icons/sport.png'
+    // };
     
     data.forEach(item => {
         const card = document.createElement('div');
         card.classList.add('class-card');
         
         const icon = document.createElement('img');
-        icon.src = iconMap[item.name] || 'icons/default.png';
-        icon.alt = `${item.name} icon`;
+        icon.src = 'icons/'+item.icon+'.png' || 'icons/default.png';
+        icon.alt = `${item.icon} icon`;
         icon.style.width = '40px';
         icon.style.height = '40px';
         
