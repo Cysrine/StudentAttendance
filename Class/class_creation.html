@@ -167,6 +167,7 @@
 
             let classes = [];
             let students = [];
+            let icons = [];
 
             fetch('http://localhost:3000/home', {
                 method: 'POST',
@@ -199,6 +200,22 @@
                 students = data;
                 renderStudentList();
                 console.log('Students (let):', students);
+            });
+
+            fetch('http://localhost:3000/load_icons', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify()
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                icons = data;
+                console.log('Icons (let):', icons);
             });
 
             // Connecting to the server and getting user/<user_id>/classes.json & students.json
@@ -297,9 +314,13 @@
                 const nameCheck = checkClassName(className);
                 if (nameCheck == 1) {
 
+                    var iconItem = icons[Math.floor(Math.random()*icons.length)];
+                    console.log(iconItem);
+
                     const jsonClass = {
                         user : user,
                         name : className,
+                        icon : iconItem.name,
                         students : []
                     };
                     selectedStudents.forEach(student => {

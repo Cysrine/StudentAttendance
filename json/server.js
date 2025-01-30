@@ -12,6 +12,7 @@ function initalize()
 {
     const data = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
     let list = JSON.parse(fs.readFileSync('students.json','utf-8'));
+    let icons = JSON.parse(fs.readFileSync('icon_names.json','utf-8'));
     for(user of data)
     {
         if(user.userId != "admin")
@@ -41,6 +42,14 @@ function initalize()
         }
 
         console.log('Student list updated');
+    });
+    fs.writeFile('icon_names.json', JSON.stringify(icons, null, 2), 'utf-8', (err) => {
+        if (err) {
+            console.log("Error writing icon list:", err);
+            return console.log('Error writing icon list');
+        }
+
+        console.log('Icon list updated');
     });
 }
 
@@ -79,6 +88,18 @@ app.post('/load_students', (req, res) => {
     }
     catch (error) {
         res.status(500).send({ message: 'Error reading students.json file' });
+    }
+});
+
+app.post('/load_icons', (req, res) => {
+    try {
+        filePath = './icon_names.json';
+        console.log("FilePath = ", filePath);
+        const icons = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        res.status(200).json(icons);
+    }
+    catch (error) {
+        res.status(500).send({ message: 'Error reading icon_names.json file' });
     }
 });
 
@@ -165,8 +186,8 @@ app.post('/update', (req, res) => {
 });
 
 app.post('/create_class', (req, res) => {
-    const { user, name, students } = req.body;
-    console.log("Data Received:", user, name, students);
+    const { user, name, icon, students } = req.body;
+    console.log("Data Received:", user, icon, name, students);
 
     // Read the existing JSON file
     fs.readFile('./users/'+user+'/classes.json', 'utf-8', (err, data) => {
@@ -187,7 +208,7 @@ app.post('/create_class', (req, res) => {
         }
 
         // Add the class
-        jsonData.push({ name: name, students: students });
+        jsonData.push({ name: name, icon: icon, students: students });
         console.log("Class pushed");
 
         // Write the updated data back to the JSON file

@@ -1,70 +1,60 @@
 [
   {
     "name": "Mathematics",
+    "icon": "math",
     "students": [
       {
         "id": 1,
         "name": "Lisa Moore",
-        "attendance": [
-          
-        ]
+        "attendance": []
       },
       {
         "id": 3,
         "name": "Matthew Alexander DVM",
-        "attendance": [
-          
-        ]
+        "attendance": []
       },
       {
         "id": 4,
         "name": "Hunter Estes",
-        "attendance": [
-          
-        ]
+        "attendance": []
       },
       {
         "id": 5,
         "name": "Bradley Bowman",
-        "attendance": [
-          
-        ]
+        "attendance": []
       }
     ]
   },
   {
     "name": "Physics",
+    "icon": "phys",
     "students": [
       {
         "id": 6,
         "name": "Darrell Hood",
-        "attendance": [
-          
-        ]
+        "attendance": []
       },
       {
         "id": 7,
         "name": "David Hoover",
-        "attendance": [
-          
-        ]
+        "attendance": []
       }
     ]
   },
   {
     "name": "Literature",
+    "icon": "lit",
     "students": [
       {
         "id": 8,
         "name": "Tiffany Roberson",
-        "attendance": [
-          
-        ]
+        "attendance": []
       }
     ]
   },
   {
     "name": "Astrology",
+    "icon": "astr",
     "students": [
       {
         "id": 10,
