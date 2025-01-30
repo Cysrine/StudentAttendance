@@ -20,7 +20,9 @@ fetch('http://localhost:3000/home', {
     const iconMap = {
         'Mathematics': 'math.png',
         'Physics': 'phys.png',
-        'Literature': 'lit.png'
+        'Literature': 'lit.png', 
+        'Astrology': 'astr.png',
+        'Sport': 'astr.png'
     };
     
     data.forEach(item => {
