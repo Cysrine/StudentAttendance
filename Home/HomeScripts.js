@@ -47,3 +47,7 @@ fetch('http://localhost:3000/home', {
 .catch(error => {
     console.error('Error:', error);
 });
+
+function createClass() {
+    window.location.href = `../CLass/class_creation.html?user=${encodeURIComponent(user)}`;
+}
