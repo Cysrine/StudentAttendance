@@ -1,7 +1,7 @@
 [
   {
     "name": "Mathematics",
-    "icon": "math",
+    "icon": "ic4",
     "students": [
       {
         "id": 19,
@@ -138,7 +138,7 @@
   },
   {
     "name": "Physics",
-    "icon": "phys",
+    "icon": "ic5",
     "students": [
       {
         "id": 13,
@@ -180,7 +180,7 @@
   },
   {
     "name": "Literature",
-    "icon": "lit",
+    "icon": "ic6",
     "students": [
       {
         "id": 3,

@@ -1,17 +1,26 @@
 [
   {
-    "name": "astr"
+    "name": "ic1"
   },
   {
-    "name": "lit"
+    "name": "ic2"
   },
   {
-    "name": "math"
+    "name": "ic3"
   },
   {
-    "name": "phys"
+    "name": "ic4"
   },
   {
-    "name": "sport"
+    "name": "ic5"
+  },
+  {
+    "name": "ic6"
+  },
+  {
+    "name": "ic7"
+  },
+  {
+    "name": "ic8"
   }
 ]

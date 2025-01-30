@@ -1,7 +1,7 @@
 [
   {
     "name": "Mathematics",
-    "icon": "math",
+    "icon": "ic1",
     "students": [
       {
         "id": 1,
@@ -27,7 +27,7 @@
   },
   {
     "name": "Physics",
-    "icon": "phys",
+    "icon": "ic2",
     "students": [
       {
         "id": 6,
@@ -54,7 +54,7 @@
   },
   {
     "name": "Astrology",
-    "icon": "astr",
+    "icon": "ic3",
     "students": [
       {
         "id": 10,
