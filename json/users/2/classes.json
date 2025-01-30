@@ -43,7 +43,7 @@
   },
   {
     "name": "Literature",
-    "icon": "lit",
+    "icon": "ic4",
     "students": [
       {
         "id": 8,
@@ -64,6 +64,22 @@
       {
         "id": 9,
         "name": "Sylvia Clark",
+        "attendance": []
+      }
+    ]
+  },
+  {
+    "name": "Programming",
+    "icon": "ic5",
+    "students": [
+      {
+        "id": 3,
+        "name": "Matthew Alexander DVM",
+        "attendance": []
+      },
+      {
+        "id": 4,
+        "name": "Hunter Estes",
         "attendance": []
       }
     ]
