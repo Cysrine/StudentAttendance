@@ -83,5 +83,47 @@
         "attendance": []
       }
     ]
+  },
+  {
+    "name": "Sport",
+    "icon": "ic4",
+    "students": [
+      {
+        "id": 1,
+        "name": "Lisa Moore",
+        "attendance": []
+      },
+      {
+        "id": 2,
+        "name": "Laurie Joseph",
+        "attendance": []
+      },
+      {
+        "id": 3,
+        "name": "Matthew Alexander DVM",
+        "attendance": []
+      }
+    ]
+  },
+  {
+    "name": "Minecraft",
+    "icon": "ic4",
+    "students": [
+      {
+        "id": 3,
+        "name": "Matthew Alexander DVM",
+        "attendance": []
+      },
+      {
+        "id": 4,
+        "name": "Hunter Estes",
+        "attendance": []
+      },
+      {
+        "id": 5,
+        "name": "Bradley Bowman",
+        "attendance": []
+      }
+    ]
   }
 ]

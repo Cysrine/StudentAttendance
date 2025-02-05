@@ -17,15 +17,14 @@ fetch('http://localhost:3000/home', {
     const classContainer = document.getElementById('classCards');
     classContainer.innerHTML = '';
     
-    // const iconMap = {
-    //     'Mathematics': 'icons/math.png',
-    //     'Physics': 'icons/phys.png',
-    //     'Literature': 'icons/lit.png',
-    //     'Astrology': 'icons/astr.png',
-    //     'Sport': 'icons/sport.png'
-    // };
-    
-    data.forEach(item => {
+    let row;
+    data.forEach((item, index) => {
+        if (index % 5 === 0) {
+            row = document.createElement('div');
+            row.classList.add('class-row');
+            classContainer.appendChild(row);
+        }
+        
         const card = document.createElement('div');
         card.classList.add('class-card');
         
@@ -41,7 +40,7 @@ fetch('http://localhost:3000/home', {
         
         card.appendChild(icon);
         card.appendChild(link);
-        classContainer.appendChild(card);
+        row.appendChild(card);
     });
 })
 .catch(error => {
