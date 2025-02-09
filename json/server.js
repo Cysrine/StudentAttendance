@@ -1,25 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const cors = require('cors'); // Import CORS
+const cors = require('cors');
 const app = express();
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all origins
+app.use(cors());
 let filePath = '';
-
 
 function initalize()
 {
     const data = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
     let list = JSON.parse(fs.readFileSync('students.json','utf-8'));
-    let icons = JSON.parse(fs.readFileSync('icon_names.json','utf-8'));
     for(user of data)
-    {
-        if(user.userId != "admin")
-        {
-            
-            const path = './users/'+user.userId+'/classes.json';
-            let classList = JSON.parse(fs.readFileSync(path, 'utf-8'));
+    {       
+        if( user.userId != "admin") {
+            filePath = './users/'+user.userId+'/classes.json';
+            let classList = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
             for(student of classList)
             {
                 for(nameId of student.students)
@@ -40,24 +36,13 @@ function initalize()
             console.log("Error writing student list:", err);
             return console.log('Error writing student list');
         }
-
         console.log('Student list updated');
-    });
-    fs.writeFile('icon_names.json', JSON.stringify(icons, null, 2), 'utf-8', (err) => {
-        if (err) {
-            console.log("Error writing icon list:", err);
-            return console.log('Error writing icon list');
-        }
-
-        console.log('Icon list updated');
     });
 }
 
-// Load users from the JSON file
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
-    // Find the user in the JSON database
     const data = users.find(user => user.username === username && user.password === password);
     if (data) {
         res.status(200).json({user: data.userId,});
@@ -79,11 +64,9 @@ app.post('/home', (req, res) => {
     }
 }); 
 
-app.post('/load_students', (req, res) => {
+app.get('/load_students', (req, res) => {
     try {
-        filePath = './students.json';
-        console.log("FilePath = ", filePath);
-        const students = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        const students = JSON.parse(fs.readFileSync('./students.json', 'utf-8'));
         res.status(200).json(students);
     }
     catch (error) {
@@ -91,11 +74,9 @@ app.post('/load_students', (req, res) => {
     }
 });
 
-app.post('/load_icons', (req, res) => {
+app.get('/load_icons', (req, res) => {
     try {
-        filePath = './icon_names.json';
-        console.log("FilePath = ", filePath);
-        const icons = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        const icons = JSON.parse(fs.readFileSync('./icon_names.json', 'utf-8'));
         res.status(200).json(icons);
     }
     catch (error) {
@@ -105,92 +86,69 @@ app.post('/load_icons', (req, res) => {
 
 app.post('/empty', (req, res) => {
     const { className, studentName, month } = req.body;
-        console.log("Entered Empty with:", className);
         let data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        console.log("Searching for class name");
         const course = data.find(course => course.name === className);
-        console.log("variable course: ", course.students);
         const student = course.students.find(student => student.name === studentName);
-        console.log("variable student: ", student);
-        console.log("Attendance before clearing:", student.attendance);
         for(let i = 0; i < student.attendance.length; i++)
         {
             let dateCheck = student.attendance[i];
             if(month === new Date(dateCheck.date).getMonth())
             {
-                console.log("Month found, clearing attendance", dateCheck.date);
                 student.attendance.splice(i,1);
             }
         }
-
-        console.log("Attendance after clearing:", student.attendance);
-        console.log("Attendance cleared, Writing to JSON file");
         
         fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
                 return res.status(500).send({ error: 'Error writing file' });
             }
-
             res.status(200).json({ message: 'Attendance deleted successfully', data: data });
         });
 });
 
 app.post('/update', (req, res) => {
     const { className, studentName, attendance } = req.body;
-    console.log("Data Received:", className, studentName, attendance);
-
-    // Read the existing JSON file
+    
     fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
             console.log("Error reading file:", err);
             return res.status(500).send({ error: 'Error reading file' });
         }
-
+        
         let jsonData = JSON.parse(data);
-
-        // Find the class
-        console.log("Finding class name");
         const course = jsonData.find(course => course.name === className);
         if (!course) {
-            console.log("Class not found")
             return res.status(404).send({ error: 'Class not found' });
         }
-
-        // Find the student
-        console.log("Finding student name");
         const studentData = course.students.find(student => student.name === studentName);
         if (!studentData) {
-            console.log("Student not found")
             return res.status(404).send({ error: 'Student not found' });
         }
-
-        // Add the attendance record
         if (!Array.isArray(studentData.attendance)) {
             studentData.attendance = [];
-            console.log("Attendance added to array")
         }
+        console.log("Emptied");
         studentData.attendance.push(attendance);
-        console.log("Attendance pushed");
-
-        // Write the updated data back to the JSON file
-        fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+        console.log("pushed = ", attendance);
+        console.log("JsonData = ", jsonData);
+        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
                 return res.status(500).send({ error: 'Error writing file' });
             }
-
+            console.log("Updated", jsonData);
             res.status(200).json({ message: 'Attendance updated successfully', data: jsonData });
         });
     });
 });
 
 app.post('/create_class', (req, res) => {
-    const { user, name, icon, students } = req.body;
-    console.log("Data Received:", user, icon, name, students);
+    const { name, icon, students } = req.body;
+    console.log("Data Received:", icon, name, students);
 
     // Read the existing JSON file
-    fs.readFile('./users/'+user+'/classes.json', 'utf-8', (err, data) => {
+    fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
             console.log("Error reading file:", err);
             return res.status(500).send({ error: 'Error reading file' });
@@ -212,7 +170,7 @@ app.post('/create_class', (req, res) => {
         console.log("Class pushed");
 
         // Write the updated data back to the JSON file
-        fs.writeFile('./users/'+user+'/classes.json', JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
             if (err) {
                 console.log("Error writing file:", err);
                 return res.status(500).send({ error: 'Error writing file' });
@@ -224,7 +182,7 @@ app.post('/create_class', (req, res) => {
 });
 
 app.get('/userList', (req, res) => {
-    fs.readFileSync('users.json', 'utf-8', (err, data) => {
+    fs.readFile('users.json', 'utf-8', (err, data) => {
         if (err) {
             console.log("Error reading file:", err);
             return res.status(500).send({ error: 'Error reading file' });

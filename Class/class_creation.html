@@ -186,7 +186,7 @@
             });
 
             fetch('http://localhost:3000/load_students', {
-                method: 'POST',
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify()
             })
@@ -203,7 +203,7 @@
             });
 
             fetch('http://localhost:3000/load_icons', {
-                method: 'POST',
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify()
             })
@@ -318,7 +318,6 @@
                     console.log(iconItem);
 
                     const jsonClass = {
-                        user : user,
                         name : className,
                         icon : iconItem.name,
                         students : []

@@ -15,10 +15,10 @@ async function handleLogin() {
             message.textContent = 'Login successful';
             message.style.color = 'green';
             if(user.user === 'admin') {
-                setTimeout(() => {window.location.href = `../Admin/admin.html`},3000);    
+                setTimeout(() => {window.location.href = `../Admin/admin.html`},2000);    
             }
             else {
-                setTimeout(() => {window.location.href = `../Home/home.html?user=${encodeURIComponent(user.user)}`},3000);
+                setTimeout(() => {window.location.href = `../Home/home.html?user=${encodeURIComponent(user.user)}`},2000);
             }
         } else {
             message.textContent = 'Invalid username or password';
