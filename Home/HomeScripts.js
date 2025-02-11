@@ -53,3 +53,6 @@ function genReport() {
 function createClass() {
     window.location.href = `../CLass/class_creation.html?user=${encodeURIComponent(user)}`;
 }
+function editClasses() {
+    window.location.href = `../Class/class_editing.html?user=${encodeURIComponent(user)}`;
+}

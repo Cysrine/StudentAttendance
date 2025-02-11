@@ -1,21 +1,55 @@
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get('user');
         
         // DOWNLOAD LIVE SERVER EXTENSION AND RUN ON IT
 
         let classes = [];
         let students = [];
-        fetch('../json/classes.json')
-            .then(response => response.json())
-            .then(data => {
-                classes = data;
-                const allStudents = classes.flatMap(classItem => classItem.students);
-                students = Array.from(new Map(allStudents.map(s => [s.name, s])).values());
-                renderClassList();
-            })
-            .catch(error => console.error('Error loading students:', error));
+        // fetch('../json/classes.json')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         classes = data;
+        //         const allStudents = classes.flatMap(classItem => classItem.students);
+        //         students = Array.from(new Map(allStudents.map(s => [s.name, s])).values());
+        //         renderClassList();
+        //     })
+        //     .catch(error => console.error('Error loading students:', error));
 
 
-        
+        fetch('http://localhost:3000/home', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: user })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            classes = data;
+            renderClassList();
+            console.log('Classes (let):', classes);
+        });
+
+
+        fetch('http://localhost:3000/load_students', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify()
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            students = data;
+            renderStudentList();
+            console.log('Students (let):', students);
+        });
 
 
 
