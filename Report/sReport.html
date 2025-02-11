@@ -51,7 +51,7 @@
             const page = document.getElementById("pageTitle");
             const heading = document.getElementById("heading");
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            let count = 0;
+            let count = false;
             
             page.textContent = `${studentName}'s Attendance`;
             heading.textContent = `${studentName}'s Attendance`; 
@@ -72,7 +72,7 @@
                     let monthlyAttendance = {};
                     let thisStudent = subject.students.find(student => student.name === studentName);
                     if(thisStudent && thisStudent.attendance.length > 0) {
-                        count++;
+                        count = true;
                         tableBody.append(document.createElement('tr'));
                         const tableHead = document.createElement('th');
                         tableHead.textContent = module;
@@ -131,11 +131,10 @@
                         }
                     }
                 })
+                if (!count) {
+                    document.getElementById("topTitle").innerHTML += `<h2>There are no records for this student yet</h2>`;
+                }
             });
-            if (count < 1) {
-
-                document.getElementById("topTitle").innerHTML += `<h2>There are no records for this student yet</h2>`;
-            }
         </script>
     </body>
 </html>

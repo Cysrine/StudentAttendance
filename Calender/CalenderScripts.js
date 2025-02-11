@@ -54,9 +54,11 @@ function generateTableHeaders(date)
                 {
                     const row = document.createElement('tr');
                     const cell = document.createElement('td');
+                    const link = document.createElement('a');
+                    link.href = `../Report/sReport.html?studentName=${encodeURIComponent(student.name)}&user=${encodeURIComponent(user)}`;
+                    link.textContent = student.name;
                     tableBody.appendChild(row);
-                    cell.textContent = student.name;
-                    cell.href = ""
+                    cell.append(link);
                     row.appendChild(cell);
                     for(let day = 1; day <= daysInMonth; day++)
                         {
