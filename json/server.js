@@ -7,6 +7,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 let filePath = '';
+app.use(express.static(path.join('../Login', 'public')));
+// Redirect root URL to an HTML file
+app.get('/', (req, res) => {
+    res.sendFile(path.join('../Login', 'public', 'login.html'));
+});
 
 function initalize()
 {
@@ -225,4 +230,3 @@ app.get('/userList', (req, res) => {
 // Start the server
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));
 initalize();
-redirect('../Login/login.html');
