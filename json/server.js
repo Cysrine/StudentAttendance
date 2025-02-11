@@ -8,9 +8,6 @@ app.use(bodyParser.json());
 app.use(cors());
 let filePath = '';
 
-<<<<<<< HEAD
-
-=======
 function initalize()
 {
     const data = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
@@ -43,7 +40,6 @@ function initalize()
         console.log('Student list updated');
     });
 }
->>>>>>> 6fae9b280b54a7911333e21bb86f74fd503af18d
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -64,11 +60,9 @@ app.post('/login', (req, res) => {
 app.post('/home', (req, res) => {
     const {user} = req.body;
     try {
-<<<<<<< HEAD
-=======
+
         filePath = './users/'+user+'/classes.json';
         const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
->>>>>>> 6fae9b280b54a7911333e21bb86f74fd503af18d
         res.status(200).json(classes);
     }
     catch (error) {
