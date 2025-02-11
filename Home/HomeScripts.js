@@ -47,6 +47,9 @@ fetch('http://localhost:3000/home', {
     console.error('Error:', error);
 });
 
+function genReport() {
+    window.location.href=`../Report/reportPage.html?user=${encodeURIComponent(user)}`;
+}
 function createClass() {
     window.location.href = `../CLass/class_creation.html?user=${encodeURIComponent(user)}`;
 }

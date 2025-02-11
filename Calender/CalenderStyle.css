@@ -92,11 +92,14 @@ body {
 } 
 
 .present {
-    background-color: #8cfa93 !important;
+    background-color: #8cfa93;
 }
 .absent {
-    background-color: #f6726b !important;
+    background-color: #f6726b;
 }
 .ill {
-    background-color: #e9fa8c !important;
+    background-color: #e9fa8c;
+}
+.less {
+    background-color: rgb(243, 98, 98);
 }

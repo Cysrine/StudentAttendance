@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Report Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(100, 181, 251);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 20px;
+        }
+        table {
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 8px;
+            text-align: center;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <h1>Student List</h1>
+        <table id="tableBody">
+        </table>
+    </div>
+</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get('user');
+    const tableBody = document.getElementById("tableBody");
+
+    function generateReport(user)
+    {
+        let studentList = new Set();
+        fetch('http://localhost:3000/home', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: user })
+        })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the response as JSON
+        })
+        .then(data => {
+            data.forEach(month => {
+                month.students.forEach(student => {
+                    studentList.add(student.name);
+                })
+            });
+            for (let i of studentList) {
+            console.log("i = ",i);
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            const link = document.createElement('a');
+            link.href = `./sReport.html?studentName=${encodeURIComponent(i)}&user=${encodeURIComponent(user)}`;
+            link.textContent = i;
+            cell.append(link);
+            row.append(cell);
+            tableBody.append(row);
+        }
+        });
+    }
+
+    generateReport(user);
+</script>
+</html>

@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const className = urlParams.get('class');
 const user = urlParams.get('user');
 const doneAlert = document.getElementById("message");
+const present = new Date();
 let currentDate = new Date();
 let studentNames = [];
 console.log(className);
@@ -55,6 +56,7 @@ function generateTableHeaders(date)
                     const cell = document.createElement('td');
                     tableBody.appendChild(row);
                     cell.textContent = student.name;
+                    cell.href = ""
                     row.appendChild(cell);
                     for(let day = 1; day <= daysInMonth; day++)
                         {
@@ -64,6 +66,8 @@ function generateTableHeaders(date)
                             row.appendChild(cell);
                         }
                     const attendance = student.attendance
+                    let attendanceCount = 0;
+                    let classDays = 0;
                     attendance.forEach(entry => 
                     {
                         if(currentDate.getMonth() === new Date(entry.date).getMonth())
@@ -72,9 +76,16 @@ function generateTableHeaders(date)
                             const block = document.getElementById(student.name + day);
                             block.textContent = entry.status;
                             block.classList.add(entry.status);
+                            if(entry.status === "present") {
+                                attendanceCount++;
+                            }
+                            classDays++;
                         }
                         
                     })
+                    if(attendanceCount/classDays < 0.75 && currentDate < present) {
+                       cell.classList.add("less"); 
+                    }
                     console.log("Student name var :", student.name);
                     studentNames.push(student.name);
                 })
@@ -172,6 +183,11 @@ function markAttendance(event)
         cell.classList.add('present');
         cell.textContent = 'present';
     }
+}
+
+function markRed(name)
+{
+    
 }
 
 document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
