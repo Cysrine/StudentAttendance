@@ -1,12 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const cors = require('cors');
+const cors = require('cors'); 
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 let filePath = '';
 
+<<<<<<< HEAD
+
+=======
 function initalize()
 {
     const data = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
@@ -39,15 +43,20 @@ function initalize()
         console.log('Student list updated');
     });
 }
+>>>>>>> 6fae9b280b54a7911333e21bb86f74fd503af18d
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
+
+        // Find the user in the JSON database
+
     const data = users.find(user => user.username === username && user.password === password);
+     
     if (data) {
         res.status(200).json({user: data.userId,});
-    } 
-    else {
+    }
+     else {
         res.status(401).send({ message: 'Invalid username or password' });
     }
 }); 
@@ -55,14 +64,40 @@ app.post('/login', (req, res) => {
 app.post('/home', (req, res) => {
     const {user} = req.body;
     try {
+<<<<<<< HEAD
+=======
         filePath = './users/'+user+'/classes.json';
         const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+>>>>>>> 6fae9b280b54a7911333e21bb86f74fd503af18d
         res.status(200).json(classes);
-    } 
+    }
     catch (error) {
         res.status(500).send({ message: 'Error reading classes.json file' });
     }
-}); 
+});
+
+app.post('/update-class', (req, res) => {
+    const updatedClass = req.body;
+
+    try {
+        // Read existing classes
+        const classes = JSON.parse(fs.readFileSync('../studentattendance/json/classes.json', 'utf-8'));
+
+        // Update the class by matching the ID
+        const updatedClasses = classes.map(cls => 
+            cls.id === updatedClass.id ? updatedClass : cls
+        );
+
+        // Write the updated data back to the file
+        fs.writeFileSync('../studentattendance/json/classes.json', JSON.stringify(updatedClasses, null, 2));
+
+        res.status(200).send({ message: 'Class updated successfully!' });
+    } catch (error) {
+        console.error('Error updating class:', error);
+        res.status(500).send({ message: 'Failed to update class' });
+    }
+});
+
 
 app.get('/load_students', (req, res) => {
     try {
