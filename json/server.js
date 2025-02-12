@@ -225,6 +225,45 @@ app.post('/create_class', (req, res) => {
     });
 });
 
+app.post('/delete_class', (req, res) => {
+    const { name } = req.body;
+    console.log("Data Received:", name);
+
+    // Read the existing JSON file
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.log("Error reading file:", err);
+            return res.status(500).send({ error: 'Error reading file' });
+        }
+
+        let jsonData = JSON.parse(data);
+        console.log("JSON Data:", jsonData);
+
+        // Find the class
+        console.log("Finding class name");
+        const course = jsonData.find(course => course.name === name);
+        if (!course) {
+            console.log("Class doesn't exist")
+            return res.status(500).send({ error: "Class doesn't exist" });
+        }
+
+        // Delete the class
+        const index = jsonData.indexOf(course);
+        jsonData.splice(index, 1);
+        console.log("Class deleted");
+
+        // Write the updated data back to the JSON file
+        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
+            if (err) {
+                console.log("Error writing file:", err);
+                return res.status(500).send({ error: 'Error writing file' });
+            }
+
+            res.status(200).json({ message: 'Class deleted successfully', data: jsonData });
+        });
+    });
+});
+
 app.get('/userList', (req, res) => {
     fs.readFile('users.json', 'utf-8', (err, data) => {
         if (err) {
