@@ -138,7 +138,7 @@ app.post('/empty', (req, res) => {
                     student.attendance.splice(i,1);
                 }
             }
-            fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8', (err) => {
+            fs.writeFile(filePath, JSON.stringify(classes, null, 2), 'utf-8', (err) => {
                 if (err) {
                     console.log("Error writing file:", err);
                     return res.status(500).send({ error: 'Error writing file' });
@@ -258,6 +258,5 @@ app.get('/userList', (req, res) => {
 // Start the server
 module.exports = app;
 //app.listen(3000, () => console.log('Server running at http://localhost:3000'));
-window.location.href = `../Login/login.html`;
 //initalize();
 
