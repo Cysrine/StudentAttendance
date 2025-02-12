@@ -41,7 +41,7 @@ fetch('http://localhost:3000/home', {
         const deleteButton = document.createElement('button');
         deleteButton.addEventListener("click", function() {
 
-            if(confirm('Are you sure you want to delete class "'+item.name+'" ?')) {
+            if(confirm('Are you sure you want to delete class "'+item.name+'"?')) {
                 fetch('http://localhost:3000/delete_class', {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
