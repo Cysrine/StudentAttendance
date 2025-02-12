@@ -41,22 +41,24 @@ fetch('http://localhost:3000/home', {
         const deleteButton = document.createElement('button');
         deleteButton.addEventListener("click", function() {
 
-            fetch('http://localhost:3000/delete_class', {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(jsonName = {name: item.name})
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Data successfully sent to the server.");
-                    window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
-                } 
-                else {
-                console.error("Failed to send data:", response.statusText);
-                }
-            })
-            .catch(error => console.error("Error:", error));
-            
+            if(confirm('Are you sure you want to delete class "'+item.name+'" ?')) {
+                fetch('http://localhost:3000/delete_class', {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(jsonName = {name: item.name})
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Data successfully sent to the server.");
+                        window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
+                    } 
+                    else {
+                    console.error("Failed to send data:", response.statusText);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+
         });
         deleteButton.textContent = 'X';
         
