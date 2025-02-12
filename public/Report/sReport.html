@@ -55,7 +55,7 @@
             
             page.textContent = `${studentName}'s Attendance`;
             heading.textContent = `${studentName}'s Attendance`; 
-            fetch('http://localhost:3000/home', {
+            fetch('/home', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: user })

@@ -33,7 +33,7 @@ function generateTableHeaders(date)
         headerRow.appendChild(th);
     }
 
-    fetch('http://localhost:3000/home', {
+    fetch('/home', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user })
@@ -78,22 +78,20 @@ function generateTableHeaders(date)
                             const block = document.getElementById(student.name + day);
                             block.textContent = entry.status;
                             block.classList.add(entry.status);
-                            if(entry.status === "present") {
+                            if(entry.status === ("present" || "ill")) {
                                 attendanceCount++;
                             }
                             classDays++;
                         }
                         
                     })
-                    if(attendanceCount/classDays < 0.75 && currentDate < present) {
+                    if((attendanceCount/classDays)*100 < 75 && currentDate < present) {
                        cell.classList.add("less"); 
                     }
-                    console.log("Student name var :", student.name);
                     studentNames.push(student.name);
                 })
             }
         });
-        console.log("Student Names:", studentNames);
     })
     .catch(error => console.error('Error fetching data:', error));
 }
@@ -103,7 +101,7 @@ async function updateAttendance()
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     for(let i = 0; i < studentNames.length; i++)
     {
-        await fetch('http://localhost:3000/empty', {
+        await fetch('/empty', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({className: className, studentName: studentNames[i], month: currentDate.getMonth()}) // Convert the data object to JSON string
@@ -133,8 +131,7 @@ async function updateAttendance()
                         status: update.className
                     }
                 }
-                console.log("Data being sent:", data);
-                await fetch('http://localhost:3000/update', {
+                await fetch('/update', {
                     method: "POST", // Use "POST" if you're adding new data, "PUT" to overwrite
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(data) // Convert the data object to JSON string
@@ -153,7 +150,6 @@ async function updateAttendance()
     } 
     doneAlert.textContent = 'Attendance Updated';
 }
-
 
 function changeMonth(offset) 
 {

@@ -2,7 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const user = urlParams.get('user');
 console.log("User Home = ", user);
 
-fetch('http://localhost:3000/home', {
+fetch('/home', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user: user })
@@ -29,7 +29,7 @@ fetch('http://localhost:3000/home', {
         card.classList.add('class-card');
         
         const icon = document.createElement('img');
-        icon.src = 'icons/'+item.icon+'.png' || 'icons/default.png';
+        icon.src = './icons/'+item.icon+'.png' || 'icons/default.png';
         icon.alt = `${item.icon} icon`;
         icon.style.width = '40px';
         icon.style.height = '40px';
@@ -42,7 +42,7 @@ fetch('http://localhost:3000/home', {
         deleteButton.addEventListener("click", function() {
 
             if(confirm('Are you sure you want to delete class "'+item.name+'"?')) {
-                fetch('http://localhost:3000/delete_class', {
+                fetch('/delete_class', {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(jsonName = {name: item.name})

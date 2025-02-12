@@ -5,7 +5,7 @@
         let classes = [];
         let students = [];
 
-        fetch('http://localhost:3000/home', {
+        fetch('/home', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: user })
@@ -127,7 +127,7 @@
         }
         
         function updateClassOnServer(updatedClass) {
-            fetch('http://localhost:3000/update-class', {  // Ensure the correct server address
+            fetch('/update-class', {  // Ensure the correct server address
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

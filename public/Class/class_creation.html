@@ -212,7 +212,7 @@
             let students = [];
             let icons = [];
 
-            fetch('http://localhost:3000/home', {
+            fetch('/home', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user: user })
@@ -228,7 +228,7 @@
                 console.log('Classes (let):', classes);
             });
 
-            fetch('http://localhost:3000/load_students', {
+            fetch('/load_students', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify()
@@ -245,7 +245,7 @@
                 console.log('Students (let):', students);
             });
 
-            fetch('http://localhost:3000/load_icons', {
+            fetch('/load_icons', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify()
@@ -376,7 +376,7 @@
 
                     console.log(jsonClass);
 
-                    fetch('http://localhost:3000/create_class', {
+                    fetch('/create_class', {
                         method: "POST",
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify(jsonClass)
