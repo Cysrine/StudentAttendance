@@ -91,22 +91,10 @@ app.post('/update-class', (req, res) => {
             return res.status(404).send({ message: 'Class not found' });
         }
 
-        // Update the students for the specific class
-        const classToUpdate = classes[classIndex];
-        
-        // Only update the students array, not the entire class
-        updatedClass.students.forEach(updatedStudent => {
-            // Find the student in the current class
-            const studentIndex = classToUpdate.students.findIndex(student => student.id === updatedStudent.id);
-            
-            if (studentIndex !== -1) {
-                // Update only the properties that need changing, like attendance or name
-                classToUpdate.students[studentIndex].attendance = updatedStudent.attendance;  // Example: update attendance
-            } else {
-                // If the student isn't in the class, you can add them (if needed)
-                classToUpdate.students.push(updatedStudent);
-            }
-        });
+        // Update only the students inside the found class
+
+        classes[classIndex].students = updatedClass.students;
+
         // Write the updated data back to the file
         fs.writeFileSync(filePath, JSON.stringify(classes, null, 2));
 
@@ -117,6 +105,7 @@ app.post('/update-class', (req, res) => {
         res.status(500).send({ message: 'Failed to update class' });
     }
 });
+
 
 
 app.get('/load_students', (req, res) => {
