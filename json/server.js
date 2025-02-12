@@ -71,22 +71,42 @@ app.post('/home', (req, res) => {
 });
 
 app.post('/update-class', (req, res) => {
-    const updatedClass = req.body;
-
+    const { updatedClass, user } = req.body;
     try {
         // Read existing classes
-        const classes = JSON.parse(fs.readFileSync('../studentattendance/json/classes.json', 'utf-8'));
+        
+        const filePath = './users/'+user+'/classes.json';
+        const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-        // Update the class by matching the ID
-        const updatedClasses = classes.map(cls => 
-            cls.id === updatedClass.id ? updatedClass : cls
-        );
+        // Find the class to update by matching the ID
+        const classIndex = classes.findIndex(cls => cls.id === updatedClass.id);
 
+        if (classIndex === -1) {
+            return res.status(404).send({ message: 'Class not found' });
+        }
+
+        // Update the students for the specific class
+        const classToUpdate = classes[classIndex];
+        
+        // Only update the students array, not the entire class
+        updatedClass.students.forEach(updatedStudent => {
+            // Find the student in the current class
+            const studentIndex = classToUpdate.students.findIndex(student => student.id === updatedStudent.id);
+            
+            if (studentIndex !== -1) {
+                // Update only the properties that need changing, like attendance or name
+                classToUpdate.students[studentIndex].attendance = updatedStudent.attendance;  // Example: update attendance
+            } else {
+                // If the student isn't in the class, you can add them (if needed)
+                classToUpdate.students.push(updatedStudent);
+            }
+        });
         // Write the updated data back to the file
-        fs.writeFileSync('../studentattendance/json/classes.json', JSON.stringify(updatedClasses, null, 2));
+        fs.writeFileSync(filePath, JSON.stringify(classes, null, 2));
 
-        res.status(200).send({ message: 'Class updated successfully!' });
-    } catch (error) {
+        res.status(200).json({ message: 'Class updated successfully!' });
+    } 
+    catch (error) {
         console.error('Error updating class:', error);
         res.status(500).send({ message: 'Failed to update class' });
     }
