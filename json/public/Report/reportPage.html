@@ -40,11 +40,12 @@
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
     const tableBody = document.getElementById("tableBody");
+    const PORT = process.env.PORT || 3000;
 
     function generateReport(user)
     {
         let studentList = new Set();
-        fetch('http://localhost:3000/home', {
+        fetch(`http://localhost:${PORT}`/home', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: user })
@@ -78,3 +79,13 @@
     generateReport(user);
 </script>
 </html>
+
+
+<!-- const baseUrl = http://localhost:3000
+const makeRequest = (method, headers, body, path) => {
+    fetch(`baseUrl/${path}, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: user })
+    })
+} -->

@@ -2,80 +2,89 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors'); 
+const path = require('path');
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 let filePath = '';
+app.use(express.static(path.join(__dirname, 'public')));
 
-function initalize()
-{
-    const data = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
-    let list = JSON.parse(fs.readFileSync('students.json','utf-8'));
-    for(user of data)
-    {       
-        if( user.userId != "admin") {
-            filePath = './users/'+user.userId+'/classes.json';
-            let classList = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-            for(student of classList)
-            {
-                for(nameId of student.students)
-                {   
-                    const check = list.find(student => student.id === nameId.id);
-                    if(!check)
-                    {
-                        const update = {"id": nameId.id, "name": nameId.name};
-                        console.log("update =", update);
-                        list.push(update);
-                    }
-                }
-            }
-        }
-    }
-    fs.writeFile('students.json', JSON.stringify(list, null, 2), 'utf-8', (err) => {
-        if (err) {
-            console.log("Error writing student list:", err);
-            return console.log('Error writing student list');
-        }
-        console.log('Student list updated');
-    });
-}
+
+// function initalize()
+// {
+//     const data = JSON.parse(fs.readFileSync('./users.json', 'utf-8'));
+//     let list = JSON.parse(fs.readFileSync('./students.json','utf-8'));
+//     for(user of data)
+//     {       
+//         if( user.userId != "admin") {
+//             filePath = './users/'+user.userId+'/classes.json';
+//             let classList = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+//             for(student of classList)
+//             {
+//                 for(nameId of student.students)
+//                 {   
+//                     const check = list.find(student => student.id === nameId.id);
+//                     if(!check)
+//                     {
+//                         const update = {"id": nameId.id, "name": nameId.name};
+//                         console.log("update =", update);
+//                         list.push(update);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     fs.writeFile('students.json', JSON.stringify(list, null, 2), 'utf-8', (err) => {
+//         if (err) {
+//             console.log("Error writing student list:", err);
+//             return console.log('Error writing student list');
+//         }
+//         console.log('Student list updated');
+//     });
+// }
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    const users = JSON.parse(fs.readFileSync('users.json', 'utf-8'));
+ const pathj = path.join(__dirname, './users.json')
+    fs.readFile(pathj, 'utf-8', (err, data) => {
+        if (err) {
+            console.error("Error reading users.json:", err);
+            return res.status(500).send({ message: 'Error reading file' });
+        }
+
+        const users = JSON.parse(data);
+        console.log("users = ", users);
 
         // Find the user in the JSON database
+        const userData = users.find(user => user.username === username && user.password === password);
+        
+        if (userData) {
+            return res.status(200).json({ user: userData.userId });
+        } else {
+            return res.status(401).send({ message: 'Invalid username or password' });
+        }
+    });
+});
 
-    const data = users.find(user => user.username === username && user.password === password);
-     
-    if (data) {
-        res.status(200).json({user: data.userId,});
-    }
-     else {
-        res.status(401).send({ message: 'Invalid username or password' });
-    }
-}); 
 
 app.post('/home', (req, res) => {
     const {user} = req.body;
-    try {
-
-        filePath = './users/'+user+'/classes.json';
-        const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        res.status(200).json(classes);
-    }
-    catch (error) {
-        res.status(500).send({ message: 'Error reading classes.json file' });
-    }
-});
+        filePath = './users/'+user+'/classes.json';    
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) return res.status(500).send({ message: 'Error reading file' });
+            const classes = JSON.parse(data);
+            res.status(200).json(classes);
+        });
+    });
 
 app.post('/update-class', (req, res) => {
     const updatedClass = req.body;
 
     try {
         // Read existing classes
-        const classes = JSON.parse(fs.readFileSync('../studentattendance/json/classes.json', 'utf-8'));
+        const classes = JSON.parse(fs.readFileSync('./classes.json', 'utf-8'));
 
         // Update the class by matching the ID
         const updatedClasses = classes.map(cls => 
@@ -83,7 +92,7 @@ app.post('/update-class', (req, res) => {
         );
 
         // Write the updated data back to the file
-        fs.writeFileSync('../studentattendance/json/classes.json', JSON.stringify(updatedClasses, null, 2));
+        fs.writeFileSync('./classes.json', JSON.stringify(updatedClasses, null, 2));
 
         res.status(200).send({ message: 'Class updated successfully!' });
     } catch (error) {
@@ -223,5 +232,6 @@ app.get('/userList', (req, res) => {
 })
 
 // Start the server
-app.listen(3000, () => console.log('Server running at http://localhost:3000'));
-initalize();
+//app.listen('3000');
+// initalize();
+module.exports = app;

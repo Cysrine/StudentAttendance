@@ -1,8 +1,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const user = urlParams.get('user');
 console.log("User Home = ", user);
+const PORT = process.env.PORT || 3000;
 
-fetch('http://localhost:3000/home', {
+fetch(`http://localhost:${PORT}/home`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user: user })

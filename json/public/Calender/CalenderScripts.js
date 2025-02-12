@@ -6,6 +6,7 @@ const present = new Date();
 let currentDate = new Date();
 let studentNames = [];
 console.log(className);
+const PORT = process.env.PORT || 3000;
 
 function generateTableHeaders(date) 
 {
@@ -33,7 +34,7 @@ function generateTableHeaders(date)
         headerRow.appendChild(th);
     }
 
-    fetch('http://localhost:3000/home', {
+    fetch(`http://localhost:${PORT}/home`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user })
@@ -103,7 +104,7 @@ async function updateAttendance()
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     for(let i = 0; i < studentNames.length; i++)
     {
-        await fetch('http://localhost:3000/empty', {
+        await fetch(`http://localhost:${PORT}/empty`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({className: className, studentName: studentNames[i], month: currentDate.getMonth()}) // Convert the data object to JSON string
@@ -134,7 +135,7 @@ async function updateAttendance()
                     }
                 }
                 console.log("Data being sent:", data);
-                await fetch('http://localhost:3000/update', {
+                await fetch(`http://localhost:${PORT}/update`, {
                     method: "POST", // Use "POST" if you're adding new data, "PUT" to overwrite
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(data) // Convert the data object to JSON string

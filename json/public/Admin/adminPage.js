@@ -1,7 +1,8 @@
 const tableBody = document.getElementById("tableBody");
+const PORT = process.env.PORT || 3000;
 
 async function generateTable() {
-    const response = await fetch('http://localhost:3000/userList'); // Fetch user data
+    const response = await fetch(`http://localhost:${PORT}/userList`); // Fetch user data
     const data = await response.json();
 
     for (let i = 1; i < data.length; i++) {
