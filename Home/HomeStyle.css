@@ -90,3 +90,22 @@ body {
 .nav-buttons button:hover {
     color: rgb(100, 181, 251);
 }
+
+.class-card button {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 6px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.class-card button:hover {
+    background-color: rgb(255, 100, 100);
+    color: white;
+}
+
