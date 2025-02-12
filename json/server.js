@@ -7,6 +7,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 let filePath = '';
+app.use(express.static(path.join('../Login', 'public')));
+// Redirect root URL to an HTML file
+app.get('/', (req, res) => {
+    res.sendFile(path.join('../Login', 'public', 'login.html'));
+});
 
 function initalize()
 {
