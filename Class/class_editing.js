@@ -31,7 +31,10 @@
         const ClassListElement = document.getElementById('class-list');
         let selectedClass = null; // To store the currently selected class
 
-
+        function goBack() {
+            console.log("Going back to the previous page...");
+            window.location.href = `../Home/home.html?user=${encodeURIComponent(user)}`;
+        }
         function renderClassList(filter = "") {
             ClassListElement.innerHTML = ""; // Clear the class list
 
