@@ -159,6 +159,7 @@ function changeMonth(offset)
 }
 function markAttendance(event)
 {
+    doneAlert.innerHTML = '';
     const cell = event.target;
     if(cell.classList.contains('present'))
     {
