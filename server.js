@@ -66,7 +66,7 @@ app.post('/login', (req, res) => {
 
 app.post('/home', (req, res) => {
     const {user} = req.body;
-    filePath = path.join(__dirname, `./users/${user}/classes.json`);
+    filePath = path.join(__dirname, `./json/users/${user}/classes.json`);
     fs.readFile(filePath, 'utf-8', (err, data) => {
         if(err) {
             console.error(`Error reading classes of user ${user}`, err);
@@ -245,7 +245,8 @@ app.post('/delete_class', (req, res) => {
 });
 
 app.get('/userList', (req, res) => {
-    fs.readFile('users.json', 'utf-8', (err, data) => {
+    pathStatic = path.join(__dirname, './json/users.json');
+    fs.readFile(pathStatic, 'utf-8', (err, data) => {
         if (err) {
             console.log("Error reading file:", err);
             return res.status(500).send({ error: 'Error reading file' });
