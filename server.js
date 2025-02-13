@@ -82,7 +82,7 @@ app.post('/update-class', (req, res) => {
     try {
         // Read existing classes
         
-        const filePath = './users/'+user+'/classes.json';
+        const filePath = '.json/users/'+user+'/classes.json';
         const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
         // Find the class to update by matching the ID
