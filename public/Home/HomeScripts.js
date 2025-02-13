@@ -76,7 +76,7 @@ function genReport() {
     window.location.href=`../Report/reportPage.html?user=${encodeURIComponent(user)}`;
 }
 function createClass() {
-    window.location.href = `../CLass/class_creation.html?user=${encodeURIComponent(user)}`;
+    window.location.href = `../Class/class_creation.html?user=${encodeURIComponent(user)}`;
 }
 function editClasses() {
     window.location.href = `../Class/class_editing.html?user=${encodeURIComponent(user)}`;
