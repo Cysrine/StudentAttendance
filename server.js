@@ -79,23 +79,32 @@ app.post('/home', (req, res) => {
 
 app.post('/update-class', (req, res) => {
     const { updatedClass, user } = req.body;
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-        if(err) {
-            console.error(`Error reading classes of user ${user}`, err);
-            return res.status(500).send({message: 'Error reading file'});
-        }
-        const classes = JSON.parse(data);
+    try {
+        // Read existing classes
+        
+        const filePath = './users/'+user+'/classes.json';
+        const classes = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
         // Find the class to update by matching the ID
         const classIndex = classes.findIndex(cls => cls.id === updatedClass.id);
+
         if (classIndex === -1) {
             return res.status(404).send({ message: 'Class not found' });
         }
+
         // Update only the students inside the found class
+
         classes[classIndex].students = updatedClass.students;
+
         // Write the updated data back to the file
-        fs.writeFile(filePath, JSON.stringify(classes, null, 2));
+        fs.writeFileSync(filePath, JSON.stringify(classes, null, 2));
+
         res.status(200).json({ message: 'Class updated successfully!' });
-    }); 
+    } 
+    catch (error) {
+        console.error('Error updating class:', error);
+        res.status(500).send({ message: 'Failed to update class' });
+    }
 });
 
 
