@@ -98,6 +98,7 @@ function generateTableHeaders(date)
 
 async function updateAttendance()
 {
+    doneAlert.textContent = 'Please wait the attendance is updating';
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     for(let i = 0; i < studentNames.length; i++)
     {
