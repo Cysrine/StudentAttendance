@@ -1,7 +1,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const user = urlParams.get('user');
         
-
+        console.log("updated")
         let classes = [];
         let students = [];
 
